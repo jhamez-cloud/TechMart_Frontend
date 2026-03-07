@@ -1,6 +1,11 @@
 import Brands_Categories from "@/components/Brands_Categories";
+import Deals from "@/components/Deals";
 import Hero from "@/components/Hero";
 import NavBar from "@/components/NavBar";
+import Banner from "@/components/Banner"
+import BestSelling from "@/components/BestSelling";
+import Brands from "@/components/Brands";
+import Mobilephones from "@/components/Mobilephones";
 
 export default function Home() {
   return (
@@ -9,6 +14,11 @@ export default function Home() {
       <Hero/>
       <br />
       <Brands_Categories/>
+      <Deals/>
+      <Banner/>
+      <BestSelling/>
+      <Brands/>
+      <Mobilephones/>
     </div>
   );
 }

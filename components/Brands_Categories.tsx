@@ -28,8 +28,8 @@ export default function Brands_Categories() {
                     <a href="" className='text-lg font-mono text-gray-400'>View All</a>
                 </div>
                 <div className='w-20 h-5 bg-gray-300 rounded-2xl p-2 text-xs flex items-center justify-between font-mono text-white'>
-                    <p>Prev</p>
-                    <p>Next</p>
+                    <p className='hover:text-green-300'>Prev</p>
+                    <p className='hover:text-green-300'>Next</p>
                 </div>
             </div>
             <ul className='grid grid-cols-4 gap-6 gap-y-12'>
