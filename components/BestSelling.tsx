@@ -4,7 +4,7 @@ import ProductCard from './ui/ProductCard'
 
 export default function BestSelling() {
   return (
-    <div className='w-full h-140 px-8 py-4 rounded-md bg-white mt-4'>
+    <div className='w-full h-125 px-8 py-4 rounded-md bg-white mt-4'>
         <div className='w-full h-10 flex items-center justify-between space-x-6 mb-8'>
             <div className='flex items-center space-x-4'>
                 <h1 className='text-xl font-semibold'>BEST SELLER</h1>

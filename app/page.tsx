@@ -6,6 +6,8 @@ import Banner from "@/components/Banner"
 import BestSelling from "@/components/BestSelling";
 import Brands from "@/components/Brands";
 import Mobilephones from "@/components/Mobilephones";
+import Computers from "@/components/Computers";
+import Gadgets from "@/components/Gadgets";
 
 export default function Home() {
   return (
@@ -19,6 +21,8 @@ export default function Home() {
       <BestSelling/>
       <Brands/>
       <Mobilephones/>
+      <Computers/>
+      <Gadgets/>
     </div>
   );
 }
