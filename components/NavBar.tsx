@@ -46,17 +46,7 @@ export default function NavBar() {
                 <nav className='w-2/3 h-full'>
                     <ul className='flex space-x-4 w-full h-full items-center justify-start pt-4'>
                         <li className='font-semibold'>
-                            <select name="" id="">
-                                <option value="">
-                                    <NavLink href='/'>HOME</NavLink>
-                                </option>
-                                <option value="">
-                                    <NavLink href='/'>HOME</NavLink>
-                                </option>
-                                <option value="">
-                                    <NavLink href='/'>HOME</NavLink>
-                                </option>
-                            </select>
+                            <NavLink href='/'>HOME</NavLink>
                         </li>
                         <li className='font-semibold'>
                             <select name="" id="">

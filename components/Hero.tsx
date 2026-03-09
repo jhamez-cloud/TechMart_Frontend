@@ -10,7 +10,7 @@ export default function Hero() {
                 <li>Smartphones</li>
                 <li>PC & Computers</li>
                 <li>Tablets</li>
-                <li>Gming & VR</li>
+                <li>Gaming & VR</li>
                 <li>Networking</li>
                 <li>Camera</li>
                 <li>Sounds</li>
