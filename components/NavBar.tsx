@@ -81,7 +81,7 @@ export default function NavBar() {
                   </li>
 
                   <li className="p-2 hover:bg-gray-100">
-                    <NavLink href="/pages/contact">Contact</NavLink>
+                    <NavLink href="/pages/register">Register</NavLink>
                   </li>
 
                   <li className="p-2 hover:bg-gray-100">

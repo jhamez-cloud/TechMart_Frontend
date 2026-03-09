@@ -2,7 +2,7 @@ import React from 'react'
 import NavBar from '@/components/NavBar'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Footer from '@/components/Footer'
-import LoginForm from '@/components/LoginForm'
+import RegisterForm from '@/components/RegisterForm'
 
 export default function page() {
   return (
@@ -10,7 +10,7 @@ export default function page() {
       <div className="w-full h-full p-12 bg-gray-200">
         <NavBar/>
         <Breadcrumbs/>
-        <LoginForm/>
+        <RegisterForm/>
       </div>
       <Footer/>
     </div>
