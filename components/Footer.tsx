@@ -6,6 +6,15 @@ import {
   Youtube,
   MessageCircle,
 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function Footer() {
   return (
@@ -96,21 +105,37 @@ export default function Footer() {
         </div>
       </div>
       <div className="w-full h-40 grid grid-cols-6 gap-4">
-        <div className="w-full h-full col-span-2 space-x-4 px-12">
-          <select
-            name=""
-            id=""
-            className="border border-gray-300 rounded-md py-1 pl-4 font-medium"
-          >
-            <option value="">USD</option>
-          </select>
-          <select
-            name=""
-            id=""
-            className="border border-gray-300 rounded-md py-1 pl-4 font-medium"
-          >
-            <option value="">Eng</option>
-          </select>
+        <div className="w-full h-full flex col-span-2 space-x-4">
+          <Select>
+            <SelectTrigger className="w-full h-full max-w-48">
+              <SelectValue placeholder="Select Currency" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Accepted Currencies</SelectLabel>
+                <SelectItem value="apple">USD</SelectItem>
+                <SelectItem value="banana">GHS</SelectItem>
+                <SelectItem value="blueberry">EUR</SelectItem>
+                <SelectItem value="grapes">GBP</SelectItem>
+                <SelectItem value="pineapple">ROB</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className="w-full h-full max-w-48">
+              <SelectValue placeholder="Select Language" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Available Languages</SelectLabel>
+                <SelectItem value="apple">Eng</SelectItem>
+                <SelectItem value="banana">Fr</SelectItem>
+                <SelectItem value="blueberry">Man</SelectItem>
+                <SelectItem value="grapes">Jpn</SelectItem>
+                <SelectItem value="pineapple">Rus</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
         <div className="w-full h-full col-span-4 space-y-8">
           <h1 className="text-xl font-bold">

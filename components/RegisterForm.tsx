@@ -5,8 +5,14 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { EyeOffIcon } from 'lucide-react'
 
 export default function RegisterForm() {
   return (
@@ -31,24 +37,39 @@ export default function RegisterForm() {
                         We&apos;ll send updates to this address.
                     </FieldDescription>
                 </Field>
-                <Field>
-                    <FieldLabel htmlFor="fieldgroup-password">Password</FieldLabel>
-                    <Input
-                    id="fieldgroup-password"
-                    type="password"
-                    placeholder="Enter your password"
-                    />
+                <Field className="max-w-sm">
+                    <FieldLabel htmlFor="inline-end-input">Enter Password</FieldLabel>
+                    <InputGroup>
+                        <InputGroupInput
+                        id="inline-end-input"
+                        type="password"
+                        placeholder="Enter password"
+                        />
+                        <InputGroupAddon align="inline-end">
+                        <EyeOffIcon />
+                        </InputGroupAddon>
+                    </InputGroup>
+                </Field>
+                <Field className="max-w-sm">
+                    <FieldLabel htmlFor="inline-end-input">Confirm Password</FieldLabel>
+                    <InputGroup>
+                        <InputGroupInput
+                        id="inline-end-input"
+                        type="password"
+                        placeholder="Confirm your password"
+                        />
+                        <InputGroupAddon align="inline-end">
+                        <EyeOffIcon />
+                        </InputGroupAddon>
+                    </InputGroup>
                 </Field>
                 <Field>
-                    <FieldLabel htmlFor="fieldgroup-password">Confirm Password</FieldLabel>
-                    <Input
-                    id="fieldgroup-password"
-                    type="password"
-                    placeholder="Confirm your password"
-                    />
-                </Field>
-                <Field orientation="horizontal">
-                    <Button type="submit" className='bg-[#1ABA1A]'>REGISTER</Button>
+                    <Field orientation="horizontal">
+                        <Button type="submit" className='bg-[#1ABA1A]'>REGISTER</Button>
+                    </Field>
+                    <FieldDescription>
+                        ALREADY HAVE AN ACCOUNT? <a href="/pages/login" className='text-[#1ABA1A] font-semibold'>LOGIN</a>
+                    </FieldDescription>
                 </Field>
             </FieldGroup>
         </div>

@@ -35,11 +35,16 @@ export default function LoginForm() {
                     placeholder="Enter your password"
                     />
                 </Field>
-                <Field orientation="horizontal">
+                <Field>
+                  <Field orientation="horizontal">
                     <Button type="reset" variant="outline">
                     Reset
                     </Button>
                     <Button type="submit" className='bg-[#1ABA1A]'>Submit</Button>
+                  </Field>
+                  <FieldDescription>
+                    DON&apos;T HAVE AN ACCOUNT? <a href="/pages/register" className='text-[#1ABA1A] font-semibold'>REGISTER</a>
+                  </FieldDescription>
                 </Field>
             </FieldGroup>
         </div>
