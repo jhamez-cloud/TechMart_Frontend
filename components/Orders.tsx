@@ -17,34 +17,32 @@ export default function Orders() {
             image='/images/grok_smartphone.png'
         />
         <OrderCard 
-            name='GROK Smartphone 128GB, OLED Retina' 
-            shipping_fee={3.98} 
+            name='Samsung s9 Plus, 128GB + 4GB RAM,GPS' 
+            free_shipping
+            free_gift 
             in_stock 
-            discount
-            old_price={850}
-            new_price={579} 
+            price={659} 
             stock_left={140} 
-            image='/images/grok_smartphone.png'
+            image='/images/samsung_s9_plus.png'
         />
         <OrderCard 
-            name='GROK Smartphone 128GB, OLED Retina' 
+            name='Pineapple MacBook Pro 2022 M1 / 512GB' 
             shipping_fee={3.98} 
             in_stock 
-            discount
-            old_price={850}
-            new_price={579} 
+            price={579}
+            just_in 
             stock_left={140} 
-            image='/images/grok_smartphone.png'
+            image='/images/macbook_pineapple.png'
         />
         <OrderCard 
-            name='GROK Smartphone 128GB, OLED Retina' 
-            shipping_fee={3.98} 
+            name='BOSO 2 Wireless On Ear Headphone' 
+            free_gift 
+            free_shipping 
             in_stock 
-            discount
-            old_price={850}
-            new_price={579} 
-            stock_left={140} 
-            image='/images/grok_smartphone.png'
+            just_in
+            price={350} 
+            stock_left={152} 
+            image='/images/boso_headphone.png'
         />
       </div>
       <div className='w-full h-full flex items-end justify-center'>

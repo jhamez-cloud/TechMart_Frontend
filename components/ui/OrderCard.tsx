@@ -1,5 +1,8 @@
 import React from 'react'
-import { BadgeCheck,BadgeX,ShoppingCart} from 'lucide-react'
+import { BadgeCheck,BadgeX,ShoppingCart,Plus,Minus} from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { ButtonGroup } from "@/components/ui/button-group"
+import { Input } from "@/components/ui/input"
 
 interface Props{
     name:string,
@@ -18,7 +21,7 @@ interface Props{
 
 export default function OrderCard(props:Props) {
   return (
-    <div className='relative w-full h-60'>
+    <div className='relative w-8/10 h-60'>
         <span
             className={`
                 ${props.discount || props.just_in
@@ -37,14 +40,14 @@ export default function OrderCard(props:Props) {
                 ? 'NEW'
                 : null}
         </span>
-        <span className='absolute w-8 h-8 flex justify-center items-center bg-gray-200 -top-1 right-8 rounded-full'>
+        <span className='absolute w-8 h-8 flex justify-center items-center bg-gray-200 -top-1 -right-2 rounded-full'>
             <ShoppingCart size={20} />
         </span>
         <div className='w-full flex justify-center space-y-2'>
             <figure className='w-1/4 h-full flex items-center'>
                 <img src={props.image} alt={props.name} />
             </figure>
-            <div className='w-3/4 h-full flex flex-col space-y-1'> 
+            <div className='w-3/4 h-full flex flex-col space-y-2'> 
                 <div className='w-full pl-20'><span className='text-gray-400 font-light'>({props.stock_left})</span></div>
                 <h1 className='font-semibold text-black'>{props.name}</h1>
                 <div className='w-full flex space-x-2'>
@@ -59,6 +62,15 @@ export default function OrderCard(props:Props) {
                             <p className='text-xl font-bold text-black'>${props.price}.00</p>
                     }
                 </div>
+                <ButtonGroup>
+                    <Button variant="outline" aria-label="increase">
+                        <Plus />
+                    </Button>
+                    <Input placeholder="0" readOnly type='number' className='w-10'/>
+                    <Button variant="outline" aria-label="decrease">
+                        <Minus />
+                    </Button>
+                </ButtonGroup>
                 <div className='flex flex-row space-x-2 items-center'>
                     <button className={`p-1 bg-[#f1f9f2] text-green-400 text-xs font-light rounded-md ${props.free_shipping ? 'text-green-400 ' : 'text-black'}`}>{props.free_shipping?'FREE SHIPPING':props.shipping_fee?.toString() + ' SHIPPING'}</button>
                     <button className={`${props.free_gift ? 'p-1 bg-[#f7efed] text-red-400 text-xs font-light rounded-md' : 'hidden'}`}>FREE GIFT</button>

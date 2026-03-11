@@ -1,6 +1,6 @@
 import React from 'react'
 import NavLink from './ui/NavLink'
-import { Search, Heart, Activity, ShoppingCart, CircleUser, BadgeInfo } from 'lucide-react'
+import { Search, Heart, Activity, ShoppingCart, CircleUser, BadgeInfo,ArrowRight } from 'lucide-react'
 import {
   Select,
   SelectContent,
@@ -104,7 +104,15 @@ export default function NavBar() {
                   </li>
 
                   <li className="p-2 hover:bg-gray-100">
-                    <NavLink href="/pages/faq">FAQ</NavLink>
+                    <NavLink href="/pages/profile">Profile</NavLink>
+                  </li>
+
+                  <li className="p-2 hover:bg-gray-100">
+                    <NavLink href="/pages/contact">Contact</NavLink>
+                  </li>
+
+                  <li className="p-2 hover:bg-gray-100">
+                    <NavLink href="/pages/checkout">Checkout</NavLink>
                   </li>
 
                 </ul>
@@ -189,32 +197,36 @@ export default function NavBar() {
       <div className="h-1/3 w-full px-4 flex items-center justify-between rounded-md bg-[#1aba1a]">
 
         {/* SEARCH */}
-        <div className="w-1/4 h-8 bg-white rounded-xl p-2 my-4 flex items-center space-x-1">
+        <div className="w-1/4 h-10 bg-white rounded-xl px-2 my-4 flex items-center justify-between">
 
+          {/* Category Select */}
           <Select>
-            <SelectTrigger className="w-full h-full max-w-48">
-              <SelectValue placeholder="Select Device Category" />
+            <SelectTrigger className="w-40 h-8 border-none">
+              <SelectValue placeholder="All Categories" />
             </SelectTrigger>
+
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Devices</SelectLabel>
-                <SelectItem value="apple">All Categories</SelectItem>
-                <SelectItem value="banana">Mobile Phones</SelectItem>
-                <SelectItem value="blueberry">Laptops and Computers</SelectItem>
-                <SelectItem value="grapes">Gaming</SelectItem>
-                <SelectItem value="pineapple">Device Accessories</SelectItem>
+                <SelectItem value="all">All Categories</SelectItem>
+                <SelectItem value="phones">Mobile Phones</SelectItem>
+                <SelectItem value="laptops">Laptops & Computers</SelectItem>
+                <SelectItem value="gaming">Gaming</SelectItem>
+                <SelectItem value="accessories">Device Accessories</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
 
-          <InputGroup>
+          {/* Search Input */}
+          <InputGroup className="flex-1 border-none">
             <InputGroupInput
-              placeholder='Search...'
-              type='text'
-              id='inline-end-input'
+              placeholder="Search products..."
+              type="text"
+              id="search-input"
             />
-            <InputGroupAddon align={'inline-end'}>
-              <Search size={16}/>
+
+            <InputGroupAddon align="inline-end">
+              <Search size={16} />
             </InputGroupAddon>
           </InputGroup>
 
