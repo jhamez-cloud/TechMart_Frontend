@@ -1,5 +1,5 @@
 import React from 'react'
-import { BadgeCheck,BadgeX,ShoppingCart} from 'lucide-react'
+import { BadgeCheck,BadgeX,ShoppingCart,Minus} from 'lucide-react'
 
 interface Props{
     name:string,
@@ -22,7 +22,7 @@ export default function ProductCard (props:Props) {
             <span
                 className={`
                     ${props.discount || props.just_in
-                    ? 'absolute -top-1 -left-2 px-2 py-1 rounded-md text-white text-sm'
+                    ? 'absolute -top-1 -left-2 px-2 py-1 rounded-md text-white text-sm whitespace-pre-line'
                     : 'hidden'}
                     ${props.discount
                     ? 'bg-green-400'
@@ -32,7 +32,7 @@ export default function ProductCard (props:Props) {
                 `}
             >
                 {props.discount
-                    ? `SAVE $${props.old_price! - props.new_price!}.00`
+                    ? `SAVE \n $${props.old_price! - props.new_price!}.00`
                     : props.just_in
                     ? 'NEW'
                     : null}
@@ -56,8 +56,8 @@ export default function ProductCard (props:Props) {
                             props.discount
                             ?
                                 <div className='w-full flex items-center space-x-2'>
-                                    <p className='text-xl font-bold text-red-500 font-mono'>${props.new_price}.00</p>
-                                    <p className='text-xl font-bold text-gray-500 font-mono line-through'>${props.old_price}.00</p>
+                                    <p className='text-lg font-bold text-red-500 font-mono'>${props.new_price}.00</p>
+                                    <p className='text-lg font-bold text-gray-500 font-mono line-through'>${props.old_price}.00</p>
                                 </div>
                             :
                                 <p className='text-xl font-bold text-black'>${props.price}.00</p>

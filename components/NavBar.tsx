@@ -89,30 +89,34 @@ export default function NavBar() {
 
                 <NavLink href="/pages">PAGES</NavLink>
 
-                <ul className="absolute top-6 left-0 hidden group-hover:block bg-white shadow-md rounded-md w-40">
+                <ul className="absolute top-6 left-0 hidden group-hover:block bg-white shadow-xl shadow-black rounded-md w-40">
 
                   <li className="p-2 hover:bg-gray-100">
                     <NavLink href="/pages/login">Login</NavLink>
                   </li>
-
+                    <hr />
                   <li className="p-2 hover:bg-gray-100">
                     <NavLink href="/pages/register">Register</NavLink>
                   </li>
-
+                    <hr />
                   <li className="p-2 hover:bg-gray-100">
                     <NavLink href="/pages/cart">Cart</NavLink>
                   </li>
-
+                    <hr />
                   <li className="p-2 hover:bg-gray-100">
                     <NavLink href="/pages/profile">Profile</NavLink>
                   </li>
-
+                    <hr />
                   <li className="p-2 hover:bg-gray-100">
                     <NavLink href="/pages/contact">Contact</NavLink>
                   </li>
-
+                    <hr />
                   <li className="p-2 hover:bg-gray-100">
                     <NavLink href="/pages/checkout">Checkout</NavLink>
+                  </li>
+                    <hr />
+                  <li className="p-2 hover:bg-gray-100">
+                    <NavLink href="/pages/about">About</NavLink>
                   </li>
 
                 </ul>
@@ -124,16 +128,16 @@ export default function NavBar() {
 
                 <span>PRODUCTS</span>
 
-                <ul className="absolute top-6 left-0 hidden group-hover:block bg-white shadow-md rounded-md w-40">
+                <ul className="absolute top-6 left-0 hidden group-hover:block bg-white shadow-xl shadow-black rounded-md w-40">
 
                   <li className="p-2 hover:bg-gray-100">
                     <NavLink href="/products/laptops">Laptops</NavLink>
                   </li>
-
+                    <hr />
                   <li className="p-2 hover:bg-gray-100">
                     <NavLink href="/products/phones">Phones</NavLink>
                   </li>
-
+                    <hr />
                   <li className="p-2 hover:bg-gray-100">
                     <NavLink href="/products/accessories">Accessories</NavLink>
                   </li>
