@@ -89,7 +89,7 @@ export default function NavBar() {
 
                 <NavLink href="/pages">PAGES</NavLink>
 
-                <ul className="absolute top-6 left-0 hidden group-hover:block bg-white shadow-xl shadow-black rounded-md w-40">
+                <ul className="absolute z-10 top-6 left-0 hidden group-hover:block bg-white shadow-xl shadow-black rounded-md w-40">
 
                   <li className="p-2 hover:bg-gray-100">
                     <NavLink href="/pages/login">Login</NavLink>

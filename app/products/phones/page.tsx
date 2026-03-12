@@ -3,6 +3,8 @@ import NavBar from '@/components/NavBar'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Footer from '@/components/Footer'
 import ShopFilter from '@/components/ShopFilter'
+import ProductsHero from '@/components/ProductsHero'
+import PopularCategories from '@/components/PopularCategories'
 
 
 export default function page() {
@@ -11,6 +13,8 @@ export default function page() {
         <div className="w-full h-full p-12 bg-gray-200">
             <NavBar/>
             <Breadcrumbs/>
+            <ProductsHero/>
+            <PopularCategories/>
             <ShopFilter/>
         </div>
         <Footer/>

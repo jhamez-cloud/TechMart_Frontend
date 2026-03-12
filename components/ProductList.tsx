@@ -1,5 +1,4 @@
 import React from 'react'
-import ProductCard from './ui/ProductCard'
 
 export default function ProductList({children}:{children:React.ReactNode}) {
   return (

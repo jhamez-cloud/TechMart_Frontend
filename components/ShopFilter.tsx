@@ -1,11 +1,10 @@
 import React from 'react';
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
 import ProductList from './ProductList';
 import ProductCard from './ui/ProductCard';
-import { ArrowBigRight,ArrowBigLeft,Grid2X2,List } from 'lucide-react';
+import { ArrowBigRight,ArrowBigLeft,Grid2X2,List, Star } from 'lucide-react';
 import { ButtonGroup } from './ui/button-group';
 import {
   Select,
@@ -23,6 +22,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import ShopList from './ShopList';
 
 const ShopFilter = () => {
   return (
@@ -74,18 +74,7 @@ const ShopFilter = () => {
               <ArrowBigLeft />
             </button>
 
-            <ProductList>
-              <ProductCard
-                name="BOSO 2 Wireless On Ear Headphone"
-                free_gift
-                free_shipping
-                in_stock
-                just_in
-                price={350}
-                stock_left={152}
-                image="/images/boso_headphone.png"
-              />
-
+            <ShopList>
               <ProductCard
                 name="iPad Pro 12.9 inch M1 2023, 64GB + WiFi, GPS"
                 old_price={759}
@@ -126,7 +115,7 @@ const ShopFilter = () => {
                 stock_left={140}
                 image="/images/ismart_charger.png"
               />
-            </ProductList>
+            </ShopList>
 
             <button>
               <ArrowBigRight />
@@ -182,7 +171,7 @@ const ShopFilter = () => {
           />
 
           <div className="space-y-3">
-            {["envato", "codecanyon", "videohive", "photodune"].map(
+            {["envato", "codecanyon", "videohive", "photodune","samsung","iphone","lenovo","xiaomi"].map(
               (brand) => (
                 <label
                   key={brand}
@@ -281,7 +270,7 @@ const ShopFilter = () => {
           <h3 className="font-bold text-sm mb-4">By Memory</h3>
 
           <div className="grid grid-cols-2 gap-y-3">
-            {["3GB", "4GB", "6GB", "8GB", "12GB", "16GB"].map((size) => (
+            {["512MB","1GB","3GB", "4GB", "6GB", "8GB", "12GB", "16GB"].map((size) => (
               <label
                 key={size}
                 className="flex items-center space-x-2 cursor-pointer"
@@ -324,13 +313,54 @@ const ShopFilter = () => {
           </div>
         </div>
 
+        <hr className="border-gray-200" />
+
+        {/* By Rating */}
+        <div>
+          <h3 className="font-bold  text-sm mb-4">By Rating</h3>
+        
+          <div className="grid grid-cols-2 gap-y-3">
+            {["1 Star", "2 Star", "3 Star", "4 Star", "5 Star"].map((star,i) => (
+              <label
+                key={i}
+                className="flex items-center space-x-4 cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 rounded border-gray-300 accent-[#1ABA1A]"
+                />
+
+                <span className="text-xs text-gray-600">
+                  {star} <span className="text-gray-400">(4)</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <hr className="border-gray-200" />
+        
+        <div className='w-full rounded-md bg-[url("/images/hero-camera.png")] bg-cover'>
+            <div className='w-1/2 h-full flex flex-col py-4 pl-8 justify-between'>
+                <div>
+                    <h1 className='text-2xl font-semibold text-white'>OKODO</h1>
+                    <h1 className='text-lg font-normal text-white'>HERO 11+</h1>
+                    <h1 className='text-lg font-normal text-white'>BLACK</h1>
+                </div>
+                <div>
+                    <p className='text-gray-500 font-medium text-lg'>From</p>
+                    <p className='text-3xl font-semibold text-green-400'>$169</p>
+                </div>
+            </div>
+        </div>
+
       </aside>
 
 
       {/* ROW 2 RIGHT — MOBILE PHONES */}
-      <section className="row-start-2 col-start-2 bg-white rounded-2xl p-6">
+      <section className="row-start-2 col-start-2 flex flex-col justify-between bg-white rounded-2xl p-6">
 
-        <div className="flex flex-col mb-6">
+        <div className="w-full h-30 flex flex-col mb-6">
 
           <h1 className="text-lg font-bold">
             MOBILE PHONES
@@ -406,56 +436,157 @@ const ShopFilter = () => {
 
         </div>
 
-        <ProductList>
-          {/* phone cards */}
-          <ProductCard 
-            name='GROK Smartphone 128GB, OLED Retina' 
-            shipping_fee={3.98} 
-            in_stock 
-            discount
-            old_price={850}
-            new_price={579} 
-            stock_left={140} 
-            image='/images/grok_smartphone.png'
-          />
-          <ProductCard 
-            name='iPad Pro Tablet 2023 LTE + WiFi,GPS Cellulose 12.9 inch,512GB' 
-            shipping_fee={2.98} 
-            in_stock 
-            price={979}
-            just_in 
-            stock_left={140} 
-            image='/images/ipad_pro_tablet.png'
-          />
-          <ProductCard 
-            name='Samsung s9 Plus, 128GB + 4GB RAM,GPS' 
-            free_shipping
-            free_gift 
-            in_stock 
-            price={659} 
-            stock_left={140} 
-            image='/images/samsung_s9_plus.png'
-          />
-          <ProductCard 
-            name='Xiaomi Redmi Note 5,64GB' 
-            free_shipping 
-            in_stock 
-            discount
-            old_price={1619}
-            new_price={1239} 
-            stock_left={140} 
-            image='/images/xiaomi_redmi_note.png'
-          />
-          <ProductCard 
-            name='Microsoft Alpha Ultra S5 Surface 128GB 2022,Silver' 
-            free_shipping 
-            in_stock 
-            price={1729}
-            stock_left={140} 
-            image='/images/microsoft_surface.png'
-          />
-        </ProductList>
-        <Pagination>
+        <div className='w-full flex-1'>
+          <ShopList>
+            {/* phone cards */}
+            <ProductCard 
+              name='GROK Smartphone 128GB, OLED Retina' 
+              shipping_fee={3.98} 
+              in_stock 
+              discount
+              old_price={850}
+              new_price={579} 
+              stock_left={140} 
+              image='/images/grok_smartphone.png'
+            />
+            <ProductCard 
+              name='iPad Pro Tablet 2023 LTE + WiFi,GPS Cellulose 12.9 inch,512GB' 
+              shipping_fee={2.98} 
+              in_stock 
+              price={979}
+              just_in 
+              stock_left={140} 
+              image='/images/ipad_pro_tablet.png'
+            />
+            <ProductCard 
+              name='Samsung s9 Plus, 128GB + 4GB RAM,GPS' 
+              free_shipping
+              free_gift 
+              in_stock 
+              price={659} 
+              stock_left={140} 
+              image='/images/samsung_s9_plus.png'
+            />
+            <ProductCard 
+              name='Xiaomi Redmi Note 5,64GB' 
+              free_shipping 
+              in_stock 
+              discount
+              old_price={1619}
+              new_price={1239} 
+              stock_left={140} 
+              image='/images/xiaomi_redmi_note.png'
+            />
+            <ProductCard 
+              name='Microsoft Alpha Ultra S5 Surface 128GB 2022,Silver' 
+              free_shipping 
+              in_stock 
+              price={1729}
+              stock_left={140} 
+              image='/images/microsoft_surface.png'
+            />
+            <ProductCard
+              name="iPad Pro 12.9 inch M1 2023, 64GB + WiFi, GPS"
+              old_price={759}
+              new_price={569}
+              discount
+              free_shipping
+              in_stock
+              stock_left={152}
+              image="/images/ipad_pro.png"
+            />
+            <ProductCard
+              name="Xiaomi Redmi Note 11 Pro 256GB 2023,Black Smartphone"
+              free_shipping
+              price={59}
+              in_stock
+              stock_left={12}
+              image="/images/deals-phone.png"
+            />
+            <ProductCard
+              name="LG Pro Tablet 2023 LTE + WiFi , GPS Cellular"
+              just_in
+              shipping_fee={2.98}
+              price={179}
+              in_stock
+              stock_left={112}
+              image="/images/lg_pro_tablet.png"
+            />
+            <ProductCard
+              name="Lenovo Redmi Note 5, 64GB"
+              just_in
+              free_shipping
+              price={69}
+              in_stock
+              stock_left={125}
+              image="/images/lenovo_redmi.png"
+            />
+            <ProductCard
+              name="Samsung Galaxy X6 Ultra LTE 4G/ 128GB, Black Smartphone"
+              free_shipping
+              free_gift
+              price={559}
+              in_stock
+              stock_left={12}
+              image="/images/samsung_galaxy_x6.png"
+            />
+            <ProductCard 
+              name='GROK Smartphone 128GB, OLED Retina' 
+              shipping_fee={3.98} 
+              in_stock 
+              discount
+              old_price={850}
+              new_price={579} 
+              stock_left={140} 
+              image='/images/grok_smartphone.png'
+            />
+            <ProductCard
+              name="SROK Smartphone 128GB, OLED Retina"
+              free_shipping
+              price={59}
+              in_stock
+              stock_left={12}
+              image="/images/srok_smartphone.png"
+            />
+            <ProductCard
+              name="LG Pro Tablet 2023 LTE + WiFi , GPS Cellular"
+              free_gift
+              shipping_fee={2.98}
+              price={179}
+              in_stock
+              stock_left={112}
+              image="/images/lg_pro_tablet.png"
+            />
+            <ProductCard 
+              name='iPad Pro Tablet 2023 LTE + WiFi,GPS Cellulose 12.9 inch,512GB' 
+              shipping_fee={2.98} 
+              price={979} 
+              stock_left={140} 
+              image='/images/ipad_pro_tablet.png'
+            />
+            <ProductCard 
+              name='Samsung s9 Plus, 128GB + 4GB RAM,GPS' 
+              free_shipping
+              free_gift 
+              in_stock 
+              price={659} 
+              stock_left={140} 
+              image='/images/samsung_s9_plus.png'
+            />
+            <ProductCard 
+              name='Xiaomi Redmi Note 5,64GB' 
+              free_shipping 
+              in_stock 
+              discount
+              old_price={1619}
+              new_price={1239} 
+              stock_left={140} 
+              image='/images/xiaomi_redmi_note.png'
+            />
+          </ShopList>
+        </div>
+
+        <Pagination className='w-full h-10'>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious href="#" />
