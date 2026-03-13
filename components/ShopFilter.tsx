@@ -475,7 +475,7 @@ const ShopFilter = () => {
               old_price={1619}
               new_price={1239} 
               stock_left={140} 
-              image='/images/xiaomi_redmi_note.png'
+              image='/images/xiaomi_redmi_note_shop.png'
             />
             <ProductCard 
               name='Microsoft Alpha Ultra S5 Surface 128GB 2022,Silver' 

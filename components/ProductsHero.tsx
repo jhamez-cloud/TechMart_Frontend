@@ -22,7 +22,7 @@ export default function ProductsHero() {
                 </div>
             </div>
 
-            <div className='col-span-1 h-full flex items-center bg-[url("/images/xiaomi_phones.png")] bg-cover bg-no-repeat rounded-md'>
+            <div className='col-span-1 h-full flex items-center bg-[url("/images/xiaomi_phones_shop.png")] bg-cover bg-no-repeat rounded-md'>
                 <div className='w-2/3 h-full flex flex-col space-y-4 py-8 pl-4'>
                     <h1 className='text-2xl font-bold'>Redmi Note 12 Pro+ 5G</h1>
                     <p className='text-gray-400'>Rise To The Challenge</p>

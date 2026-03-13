@@ -126,7 +126,7 @@ export default function NavBar() {
               {/* PRODUCTS DROPDOWN */}
               <li className="relative group font-semibold cursor-pointer">
 
-                <span>PRODUCTS</span>
+                <NavLink href='/products'>PRODUCTS</NavLink>
 
                 <ul className="absolute top-6 left-0 hidden group-hover:block bg-white shadow-xl shadow-black rounded-md w-40">
 
