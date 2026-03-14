@@ -2,9 +2,8 @@ import React from 'react'
 import NavBar from '@/components/NavBar'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Footer from '@/components/Footer'
-import ShopFilter from '@/components/ShopFilter'
-import ProductsHero from '@/components/ProductsHero'
-import PopularCategories from '@/components/PopularCategories'
+import LaptopShopFilter from '@/components/LaptopShopFilter'
+import LaptopPopularCategories from '@/components/LaptopPopularCategories'
 
 
 export default function page() {
@@ -12,10 +11,12 @@ export default function page() {
     <div className={`w-full min-h-screen`}>
         <div className="w-full h-full p-12 bg-gray-200">
             <NavBar/>
-            <Breadcrumbs/>
-            <ProductsHero/>
-            <PopularCategories/>
-            <ShopFilter/>
+            <Breadcrumbs
+               parent1='Pages'
+               parent2='Laptops'
+            />
+            <LaptopPopularCategories/>
+            <LaptopShopFilter/>
         </div>
         <Footer/>
     </div>

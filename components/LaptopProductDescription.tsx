@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function ProductDescripton() {
+export default function LaptopProductDescripton() {
   return (
-    <div className='w-full min-h-200 bg-white rounded-md py-4 px-10 mt-4'>
+    <div className='w-full min-h-200 bg-white rounded-md space-y-4 py-4 px-10 mt-4'>
         <div className='w-full h-10 flex items-center justify-between space-x-6 mb-8'>
             <div className='flex items-center space-x-10'>
                 <h1 className='text-xl font-bold'>DESCRIPTION</h1>
@@ -15,7 +15,7 @@ export default function ProductDescripton() {
             <p>
                 Built for ultra-fast performance, the thin and lightweight Samsung Galaxy Tab S2 goes anywhere you go. Photos, movies and documents pop on a crisp, clear Super AMOLED display. Expandablememory lets you enjoy more of your favorite content. And connecting and sharing between all your Samsung devices is easier than ever. Welcome to life with the reimagined Samsung Galaxy TabS2. Watch thev world come to life on your tablet's <span className='text-lg font-semibold'>Super AMOLED display</span> * . With deep contrast, rich colors and crisp details, you won't miss a thing
             </p>
-            <img src="/images/samsung_product/product_description_banner1.png" alt="" className='w-full h-90 rounded-md' />
+            <img src="/images/laptops/laptop_description_banner.png" alt="" className='w-full h-90 rounded-md' />
             <div className='text-center'>
                 <p className='text-gray-400 italic font-light'>* The Galaxy Tab S2’s 4 : 3 ratio display provides you with an ideal environment for performing office tasks.</p>
             </div>
@@ -31,8 +31,8 @@ export default function ProductDescripton() {
                 </p>
             </div>
             <div className='w-full flex justify-between space-x-2'>
-                <img src="/images/samsung_product/from_manifacturer.png" alt="" className='w-1/2'/>
-                <img src="/images/samsung_product/from_manifacturer2.png" alt="" className='flex-1'/>
+                <img src="/images/laptops/black_macbook.png" alt="" className='w-1/2'/>
+                <img src="/images/laptops/macbook_typing.png" alt="" className='flex-1'/>
             </div>
         </div>
         <div className='w-full'>

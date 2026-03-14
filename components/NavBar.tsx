@@ -108,10 +108,6 @@ export default function NavBar() {
                   </li>
                     <hr />
                   <li className="p-2 hover:bg-gray-100">
-                    <NavLink href="/pages/contact">Contact</NavLink>
-                  </li>
-                    <hr />
-                  <li className="p-2 hover:bg-gray-100">
                     <NavLink href="/pages/checkout">Checkout</NavLink>
                   </li>
                     <hr />

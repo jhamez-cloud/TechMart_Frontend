@@ -12,7 +12,10 @@ export default function page() {
     <div className={`w-full min-h-screen`}>
         <div className="w-full h-full p-12 bg-gray-200">
             <NavBar/>
-            <Breadcrumbs/>
+            <Breadcrumbs
+              parent1='Products'
+              parent2='Phones'
+            />
             <ProductsHero/>
             <PopularCategories/>
             <ShopFilter/>

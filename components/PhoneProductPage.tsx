@@ -7,7 +7,7 @@ import { Plus,Minus,Twitter,Instagram,Youtube,Facebook,MessageCircle } from "luc
 
 import { Star, Heart, RefreshCcw, Truck } from "lucide-react"
 
-export default function ProductPage() {
+export default function PhoneProductPage() {
   return (
     <div className="grid grid-rows-[auto_auto] mt-4">
 
