@@ -1,3 +1,4 @@
+'use client'
 import Brands_Categories from "@/components/Brands_Categories";
 import Deals from "@/components/Deals";
 import Hero from "@/components/Hero";
@@ -13,7 +14,13 @@ import RecentlyViewed from "@/components/RecentlyViewed";
 import About from "@/components/About";
 import Footer from "@/components/Footer";
 
+import useSWR from "swr";
+
 export default function Home() {
+
+  const Django_URL = process.env.NEXT_PUBLIC_DJANGO_URL
+  const {data:products,error:error} = useSWR(`${Django_URL}/api/v1/products`)
+
   return (
     <div className={`w-full min-h-screen `}>
       <div className="w-full h-full p-12 bg-gray-200">
