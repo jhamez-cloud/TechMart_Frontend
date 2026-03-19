@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
@@ -23,8 +24,34 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 import ShopList from './ShopList';
+import useSWR from 'swr';
+
+interface Product{
+  id:number,
+  name:string,
+  image:string,
+  price?:number,
+  old_price?:number,
+  new_price?:number,
+  discount?:boolean,
+  just_in?:boolean,
+  free_shipping?:boolean,
+  shipping_fee?:number,
+  free_gift?:boolean,
+  stock_left:number,
+  in_stock:boolean,
+}
 
 const ShopFilter = () => {
+
+  const Django_Url = process.env.NEXT_PUBLIC_DJANGO_URL
+  const {data:products,error:error} = useSWR<Product[]>(`${Django_Url}/api/v1/products/?category=mobilephones`)
+
+  if (error) return <div>Failed to load products</div>
+  if (!products) return <div>Loading...</div>
+
+
+
   return (
     <div className="grid grid-cols-[300px_1fr] grid-rows-[auto_1fr] gap-4 min-h-screen mt-4">
 
@@ -439,150 +466,23 @@ const ShopFilter = () => {
         <div className='w-full flex-1'>
           <ShopList>
             {/* phone cards */}
-            <ProductCard 
-              name='GROK Smartphone 128GB, OLED Retina' 
-              shipping_fee={3.98} 
-              in_stock 
-              discount
-              old_price={850}
-              new_price={579} 
-              stock_left={140} 
-              image='/images/grok_smartphone.png'
-            />
-            <ProductCard 
-              name='iPad Pro Tablet 2023 LTE + WiFi,GPS Cellulose 12.9 inch,512GB' 
-              shipping_fee={2.98} 
-              in_stock 
-              price={979}
-              just_in 
-              stock_left={140} 
-              image='/images/ipad_pro_tablet.png'
-            />
-            <ProductCard 
-              name='Samsung s9 Plus, 128GB + 4GB RAM,GPS' 
-              free_shipping
-              free_gift 
-              in_stock 
-              price={659} 
-              stock_left={140} 
-              image='/images/samsung_s9_plus.png'
-            />
-            <ProductCard 
-              name='Xiaomi Redmi Note 5,64GB' 
-              free_shipping 
-              in_stock 
-              discount
-              old_price={1619}
-              new_price={1239} 
-              stock_left={140} 
-              image='/images/xiaomi_redmi_note_shop.png'
-            />
-            <ProductCard 
-              name='Microsoft Alpha Ultra S5 Surface 128GB 2022,Silver' 
-              free_shipping 
-              in_stock 
-              price={1729}
-              stock_left={140} 
-              image='/images/microsoft_surface.png'
-            />
-            <ProductCard
-              name="iPad Pro 12.9 inch M1 2023, 64GB + WiFi, GPS"
-              old_price={759}
-              new_price={569}
-              discount
-              free_shipping
-              in_stock
-              stock_left={152}
-              image="/images/ipad_pro.png"
-            />
-            <ProductCard
-              name="Xiaomi Redmi Note 11 Pro 256GB 2023,Black Smartphone"
-              free_shipping
-              price={59}
-              in_stock
-              stock_left={12}
-              image="/images/deals-phone.png"
-            />
-            <ProductCard
-              name="LG Pro Tablet 2023 LTE + WiFi , GPS Cellular"
-              just_in
-              shipping_fee={2.98}
-              price={179}
-              in_stock
-              stock_left={112}
-              image="/images/lg_pro_tablet.png"
-            />
-            <ProductCard
-              name="Lenovo Redmi Note 5, 64GB"
-              just_in
-              free_shipping
-              price={69}
-              in_stock
-              stock_left={125}
-              image="/images/lenovo_redmi.png"
-            />
-            <ProductCard
-              name="Samsung Galaxy X6 Ultra LTE 4G/ 128GB, Black Smartphone"
-              free_shipping
-              free_gift
-              price={559}
-              in_stock
-              stock_left={12}
-              image="/images/samsung_galaxy_x6.png"
-            />
-            <ProductCard 
-              name='GROK Smartphone 128GB, OLED Retina' 
-              shipping_fee={3.98} 
-              in_stock 
-              discount
-              old_price={850}
-              new_price={579} 
-              stock_left={140} 
-              image='/images/grok_smartphone.png'
-            />
-            <ProductCard
-              name="SROK Smartphone 128GB, OLED Retina"
-              free_shipping
-              price={59}
-              in_stock
-              stock_left={12}
-              image="/images/srok_smartphone.png"
-            />
-            <ProductCard
-              name="LG Pro Tablet 2023 LTE + WiFi , GPS Cellular"
-              free_gift
-              shipping_fee={2.98}
-              price={179}
-              in_stock
-              stock_left={112}
-              image="/images/lg_pro_tablet.png"
-            />
-            <ProductCard 
-              name='iPad Pro Tablet 2023 LTE + WiFi,GPS Cellulose 12.9 inch,512GB' 
-              shipping_fee={2.98} 
-              price={979} 
-              stock_left={140} 
-              image='/images/ipad_pro_tablet.png'
-            />
-            <ProductCard 
-              name='Samsung s9 Plus, 128GB + 4GB RAM,GPS' 
-              free_shipping
-              free_gift 
-              in_stock 
-              price={659} 
-              stock_left={140} 
-              image='/images/samsung_s9_plus.png'
-            />
-            <ProductCard 
-              name='Xiaomi Redmi Note 5,64GB' 
-              free_shipping 
-              in_stock 
-              discount
-              old_price={1619}
-              new_price={1239} 
-              stock_left={140} 
-              image='/images/xiaomi_redmi_note.png'
-            />
+            {products.map(product => (
+              <ProductCard
+                key={product.id} // ideally use a unique id or slug from your model
+                name={product.name}
+                image={product.image || '/images/default.png'}
+                price={product.price}
+                old_price={product.discount ? product.new_price : undefined}
+                new_price={product.discount ? product.new_price : undefined}
+                discount={product.discount || false}
+                just_in={product.just_in || false}
+                free_shipping={product.free_shipping || false}
+                shipping_fee={product.shipping_fee}
+                free_gift={product.free_gift || false}
+                stock_left={product.stock_left}
+                in_stock={product.in_stock}
+              />
+            ))}
           </ShopList>
         </div>
 

@@ -19,7 +19,7 @@ import useSWR from "swr";
 export default function Home() {
 
   const Django_URL = process.env.NEXT_PUBLIC_DJANGO_URL
-  const {data:products,error:error} = useSWR(`${Django_URL}/api/v1/products`)
+  const {data:products,error:error} = useSWR(`${Django_URL}/api/v1/products/?category=laptops`)
 
   return (
     <div className={`w-full min-h-screen `}>

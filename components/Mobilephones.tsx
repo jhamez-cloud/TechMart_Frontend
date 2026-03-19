@@ -2,8 +2,13 @@ import React from 'react'
 import Category from './MobileCategory'
 import ProductList from './ProductList'
 import ProductCard from './ui/ProductCard'
+import useSWR from 'swr'
 
 export default function Mobilephones() {
+
+  const Django_URL = process.env.NEXT_PUBLIC_DJANGO_URL
+  const {data:products,error:error} = useSWR(`${Django_URL}/api/v1/products`)
+
   return (
     <div className='w-full h-185 rounded-md flex flex-col space-y-8 bg-white mt-4 px-12 py-4'>
         <Category 
