@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
 import ProductCard from './ui/ProductCard';
-import { ArrowBigRight,ArrowBigLeft,Grid2X2,List,FolderLockIcon,ArrowUpRightIcon } from 'lucide-react';
+import { ArrowBigRight,ArrowBigLeft,Grid2X2,List,} from 'lucide-react';
 import { ButtonGroup } from './ui/button-group';
 import {
   Select,
@@ -22,16 +22,10 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
-import {
-  Empty,
-  EmptyHeader,
-  EmptyTitle,
-  EmptyMedia,
-  EmptyDescription,
-} from './ui/empty'
 import ShopList from './ShopList';
 import useSWR from 'swr';
 import { useState } from 'react';
+import ApiError from './ApiError';
 
 interface Product{
   id:number,
@@ -59,32 +53,7 @@ const LaptopShopFilter = () => {
 
   if (error)
   return (
-    <Empty className='w-full'>
-
-      <EmptyHeader>
-        <EmptyMedia variant="icon">
-          <FolderLockIcon />
-        </EmptyMedia>
-
-        <EmptyTitle>No Products Yet</EmptyTitle>
-
-        <EmptyDescription>
-          sorry! No Products Available.
-          Check your internet connectivity or try back later.
-        </EmptyDescription>
-      </EmptyHeader>
-
-      <Button
-        variant="link"
-        asChild
-        className="text-muted-foreground"
-        size="sm"
-      >
-        <a href="#">
-          Refresh <ArrowUpRightIcon />
-        </a>
-      </Button>
-    </Empty>
+    <ApiError/>
   );
   if (!products) return <div>Loading...</div>;
 
