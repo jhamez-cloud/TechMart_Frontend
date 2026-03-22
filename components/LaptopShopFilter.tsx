@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
-import ProductList from './ProductList';
+import { Spinner } from './ui/spinner';
 import ProductCard from './ui/ProductCard';
 import { ArrowBigRight,ArrowBigLeft,Grid2X2,List, Star } from 'lucide-react';
 import { ButtonGroup } from './ui/button-group';
@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/pagination"
 import ShopList from './ShopList';
 import useSWR from 'swr';
+import { useState } from 'react';
 
 interface Product{
   id:number,
@@ -44,8 +45,27 @@ interface Product{
 
 const LaptopShopFilter = () => {
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const PRODUCTS_PER_PAGE = 12;
+
   const Django_Url = process.env.NEXT_PUBLIC_DJANGO_URL
   const {data:products,error:error} = useSWR<Product[]>(`${Django_Url}/api/v1/products/?category=laptops`)
+
+  if (error)
+  return (
+    <div className="mt-4 w-full h-auto flex justify-center items-center">
+      <Spinner className="size-8" />
+    </div>
+  );
+  if (!products) return <div>Loading...</div>;
+
+  const totalProducts = products.length;
+  const totalPages = Math.ceil(totalProducts / PRODUCTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+  const endIndex = startIndex + PRODUCTS_PER_PAGE;
+  const paginatedProducts = products.slice(startIndex, endIndex);
+  const displayStart = startIndex + 1;
+  const displayEnd = Math.min(endIndex, totalProducts);
 
   return (
     <div className="grid items-stretch grid-cols-[300px_1fr] gap-4 min-h-screen mt-4">
@@ -482,27 +502,49 @@ const LaptopShopFilter = () => {
           </ShopList>
         </div>
 
-        <Pagination className='w-full h-10'>
+        <Pagination className="w-full h-10">
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious href="#" />
+              <PaginationPrevious
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (currentPage > 1) setCurrentPage(currentPage - 1);
+                }}
+              />
             </PaginationItem>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+              (pageNum) => (
+                <PaginationItem key={pageNum}>
+                  <PaginationLink
+                    href="#"
+                    isActive={currentPage === pageNum}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentPage(pageNum);
+                    }}
+                  >
+                    {pageNum}
+                  </PaginationLink>
+                </PaginationItem>
+              ),
+            )}
+
+            {totalPages > 5 && currentPage < totalPages - 2 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
+
             <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                2
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
+              <PaginationNext
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+                }}
+              />
             </PaginationItem>
           </PaginationContent>
         </Pagination>
