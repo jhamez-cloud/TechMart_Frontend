@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
-import loading from "@/app/products/phones/loading";
 import ProductCard from "./ui/ProductCard";
-import { ArrowBigRight, ArrowBigLeft, Grid2X2, List, Star } from "lucide-react";
+import { ArrowBigRight, ArrowBigLeft, Grid2X2, List, FolderLockIcon,ArrowUpRightIcon } from "lucide-react";
 import { ButtonGroup } from "./ui/button-group";
 import {
   Select,
@@ -23,9 +22,15 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+  Empty,
+  EmptyHeader,
+  EmptyTitle,
+  EmptyMedia,
+  EmptyDescription,
+} from './ui/empty'
 import ShopList from "./ShopList";
 import useSWR from "swr";
-import { Spinner } from "./ui/spinner";
 
 interface Product {
   id: number;
@@ -54,9 +59,32 @@ const ShopFilter = () => {
 
   if (error)
     return (
-      <div className="mt-4 w-full h-auto flex justify-center items-center">
-        <Spinner className="size-8" />
-      </div>
+      <Empty className="w-full text-lg">
+
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <FolderLockIcon />
+          </EmptyMedia>
+
+          <EmptyTitle>No Products Yet</EmptyTitle>
+
+          <EmptyDescription>
+            sorry! No Products Available.
+            Check your internet connectivity or try back later.
+          </EmptyDescription>
+        </EmptyHeader>
+
+        <Button
+          variant="link"
+          asChild
+          className="text-muted-foreground"
+          size="sm"
+        >
+          <a href="#">
+            Refresh <ArrowUpRightIcon />
+          </a>
+        </Button>
+      </Empty>
     );
   if (!products) return <div>Loading...</div>;
 

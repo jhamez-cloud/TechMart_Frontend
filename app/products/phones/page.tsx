@@ -10,7 +10,7 @@ import PopularCategories from '@/components/PopularCategories'
 export default function page() {
   return (
     <div className={`w-full min-h-screen`}>
-        <div className="w-full h-full p-12 bg-gray-200">
+        <div className="w-full h-full p-12 py-10 bg-gray-200">
             <NavBar/>
             <Breadcrumbs
               parent1='Products'
