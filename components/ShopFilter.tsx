@@ -26,6 +26,7 @@ import {
 import ShopList from "./ShopList";
 import ApiError from "./ApiError";
 import useSWR from "swr";
+import ApiLoading from "./ApiLoading";
 
 interface Product {
   id: number;
@@ -56,7 +57,7 @@ const ShopFilter = () => {
     return (
       <ApiError/>
     );
-  if (!products) return <div>Loading...</div>;
+  if (!products) return <ApiLoading/>;
 
   // Pagination logic
   const totalProducts = products.length;

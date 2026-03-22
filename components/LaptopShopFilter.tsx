@@ -26,6 +26,7 @@ import ShopList from './ShopList';
 import useSWR from 'swr';
 import { useState } from 'react';
 import ApiError from './ApiError';
+import ApiLoading from './ApiLoading';
 
 interface Product{
   id:number,
@@ -55,7 +56,7 @@ const LaptopShopFilter = () => {
   return (
     <ApiError/>
   );
-  if (!products) return <div>Loading...</div>;
+  if (!products) return <ApiLoading/>;
 
   const totalProducts = products.length;
   const totalPages = Math.ceil(totalProducts / PRODUCTS_PER_PAGE);
