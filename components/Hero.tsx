@@ -81,7 +81,7 @@ export default function Hero() {
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
 
           {/* WATCH */}
-          <div className='rounded-md bg-[url("/images/hero-smartwatch.png")] bg-cover p-4 flex flex-col justify-between min-h-[180px]'>
+          <div className='rounded-md bg-[url("/images/hero-smartwatch.png")] bg-cover p-4 flex flex-col justify-between min-h-45'>
             <p>XOMIA</p>
             <h1 className='text-lg font-bold'>SPORTS WATER RESISTANCE WATCH</h1>
             <button className='bg-black text-white px-3 py-2 rounded-md hover:bg-red-600'>
@@ -90,7 +90,7 @@ export default function Hero() {
           </div>
 
           {/* CAMERA */}
-          <div className='rounded-md bg-[url("/images/hero-camera.png")] bg-cover p-4 flex flex-col justify-between min-h-[180px]'>
+          <div className='rounded-md bg-[url("/images/hero-camera.png")] bg-cover p-4 flex flex-col justify-between min-h-45'>
             <div>
               <h1 className='text-white'>OKODO</h1>
               <p className='text-white'>HERO 11+ BLACK</p>

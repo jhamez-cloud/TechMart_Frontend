@@ -103,7 +103,7 @@ export default function AboutPage() {
         <p className="text-gray-600 leading-relaxed mb-6 text-sm md:text-base">
           Nam maximus nunc a augue pulvinar, non euismod mauris tempus. <span className="font-bold text-black">Vivamus mollis mauris</span> vitae rhoncus egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
         </p>
-        <div className="w-full h-64 md:h-[400px] overflow-hidden rounded-lg">
+        <div className="w-full h-64 md:h-100 overflow-hidden rounded-lg">
           <img src="/images/city_view.webp" alt="Office Building" className="w-full h-full object-cover" />
         </div>
       </div>
@@ -144,7 +144,7 @@ export default function AboutPage() {
           {leaders.map((leader, index) => (
             <div key={index} className="group cursor-pointer">
               <div className="overflow-hidden rounded-xl mb-2">
-                <img src={leader.img} alt={leader.name} className="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-105" />
+                <img src={leader.img} alt={leader.name} className="w-full aspect-3/4 object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
               <h3 className="font-bold text-sm">{leader.name}</h3>
               <p className="text-[10px] uppercase text-gray-500 tracking-tighter mt-1">{leader.role}</p>

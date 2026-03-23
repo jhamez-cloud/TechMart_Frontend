@@ -18,7 +18,7 @@ export default function Banner() {
         </p>
         <a
           href=""
-          className="underline font-serif hover:text-yellow-400 text-sm md:text-base whitespace-nowrap flex-shrink-0"
+          className="underline font-serif hover:text-yellow-400 text-sm md:text-base whitespace-nowrap shrink-0"
         >
           Apply For 30 Day Free Trial
         </a>

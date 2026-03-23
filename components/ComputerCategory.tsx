@@ -24,7 +24,7 @@ export default function ComputerCategory(props: Props) {
 
         {/* LEFT IMAGE */}
         <div
-          className='w-full lg:w-1/2 min-h-[200px] flex items-center bg-cover rounded-md'
+          className='w-full lg:w-1/2 min-h-50 flex items-center bg-cover rounded-md'
           style={{ backgroundImage: `url(${props.category_image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         >
           <div className='w-full lg:w-1/3 flex flex-col space-y-3 py-6 px-4 lg:pl-8 text-white'>
