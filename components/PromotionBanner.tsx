@@ -1,24 +1,49 @@
-import React from 'react'
+import React from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
 
 export default function PromotionBanner() {
   return (
-    <div className='w-full h-60 grid grid-cols-2 gap-2 mt-4'>
-      <div className='w-full h-full rounded-md bg-[url("/images/membership_card.png")] bg-cover px-8 py-4 flex flex-row-reverse'>
-        <div  className='w-1/3 h-full flex flex-col justify-center space-y-4'>
-            <h1 className='text-4xl font-bold text-[#FFE400]'>10% Back</h1>
-            <p className='text-white font-normal'>Earn 10% Cash Back on TechMart. <span><a href="" className='underline'>Learn How</a></span></p>
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+      
+      {/* Membership Banner */}
+      <div
+        className='w-full h-60 rounded-md bg-[url("/images/membership_card.png")] bg-cover px-6 py-4 flex justify-center items-center'
+      >
+        <div className="w-2/3 md:w-full h-full md:justify-center flex flex-col items-center justify-center space-y-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#FFE400]">10% Back</h1>
+          <p className="text-white text-center font-normal text-sm md:text-base">
+            Earn 10% Cash Back on TechMart.{" "}
+            <a href="" className="underline">
+              Learn How
+            </a>
+          </p>
         </div>
       </div>
-      <div className='w-full h-full rounded-md bg-[url("/images/mobile_version.png")] bg-cover p-8 flex flex-col'>
-        <div className='w-3/4 h-2/3 flex space-x-8'>
-            <h1 className='text-3xl font-bold text-white'>Download our app</h1>
-            <p className='font-normal text-gray-300'>Enter your email and we'll send you a link to download the app.</p>
+
+      {/* App Download Banner */}
+      <div
+        className='w-full h-60 rounded-md bg-[url("/images/mobile_version.png")] bg-cover p-6 flex flex-col justify-between'
+      >
+        <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-white">Download our app</h1>
+          <p className="text-gray-300 text-sm md:text-base">
+            Enter your email and we'll send you a link to download the app.
+          </p>
         </div>
-        <div className='w-3/5 h-10 bg-[#5f5d5d48] rounded-sm px-4 py-1 flex justify-between items-center'>
-            <input className='text-gray-200 text-lg w-3/4 focus:outline-none' type="text" placeholder="example@email.com..." />
-            <button className='text-lg text-green-400'>Send Link</button>
+
+        <div className="flex flex-col md:flex-row md:items-center md:space-x-2 mt-4 md:mt-0">
+          <Input
+            type="email"
+            placeholder="example@email.com..."
+            className="flex-1 text-gray-200"
+          />
+          <Button variant="link" className="mt-2 md:mt-0 flex items-center text-green-400">
+            Send Link <ArrowUpRight className="ml-2 h-4 w-4" />
+          </Button>
         </div>
       </div>
     </div>
-  )
+  );
 }

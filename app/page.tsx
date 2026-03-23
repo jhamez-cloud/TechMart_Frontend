@@ -22,7 +22,7 @@ export default function Home() {
   const {data:products,error:error} = useSWR(`${Django_URL}/api/v1/products/?category=laptops`)
 
   return (
-    <div className={`w-full min-h-screen `}>
+    <div className={`w-full min-h-screen md:w-full`}>
       <div className="w-full h-full p-12 bg-gray-200">
         <NavBar />
         <Hero />

@@ -9,7 +9,7 @@ interface Props{
 export default function CategoryProduct(props:Props) {
   return (
     <div className='w-full h-full'>
-        <figure className='w-full flex flex-row-reverse px-4 justify-between items-center'>
+        <figure className='w-full flex flex-row-reverse md:justify-center md:items-center px-4 justify-between items-center'>
           <img src={props.image} alt={props.title} />
           <figcaption>
             <h1 className='font-bold text-black'>{props.title}</h1>

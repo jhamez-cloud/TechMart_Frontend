@@ -19,27 +19,23 @@ interface Props{
 export default function RecentlyViewedCard (props:Props) {
   return (
         <div className='relative w-full h-full flex'>
-            <span
-                className={`
-                    ${props.discount || props.just_in
-                    ? 'absolute -top-1 -left-2 px-2 py-1 rounded-md text-white text-sm'
-                    : 'hidden'}
-                    ${props.discount
-                    ? 'bg-green-400'
-                    : props.just_in
-                    ? 'bg-black'
-                    : ''}
-                `}
-            >
+            {/* BADGE */}
+            {(props.discount || props.just_in) && (
+            <span className={`
+                absolute -top-2 -left-2 px-2 py-1 rounded-md text-white text-xs whitespace-pre-line
+                ${props.discount ? 'bg-green-400' : 'bg-black'}
+            `}>
                 {props.discount
-                    ? `SAVE $${props.old_price! - props.new_price!}.00`
-                    : props.just_in
-                    ? 'NEW'
-                    : null}
+                ? `SAVE \n $${props.old_price! - props.new_price!}`
+                : 'NEW'}
             </span>
-            <span className='absolute w-8 h-8 flex justify-center items-center bg-gray-200 -top-1 right-8 rounded-full'>
-                <ShoppingCart size={20} />
+            )}
+    
+            {/* CART ICON */}
+            <span className='absolute w-8 h-8 flex justify-center items-center bg-gray-200 -top-2 right-2 rounded-full'>
+                <ShoppingCart size={16} />
             </span>
+            
             <div className='w-full flex justify-center space-y-2'>
                 <figure className='w-1/4 h-full flex items-center'>
                     <img src={props.image} alt={props.name} />

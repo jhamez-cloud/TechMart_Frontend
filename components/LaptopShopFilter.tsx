@@ -413,7 +413,10 @@ const LaptopShopFilter = () => {
 
               {/* LEFT */}
               <div className="text-sm text-gray-600">
-                <span className="font-semibold text-black">1 - 40</span> of 120 results
+                <span className="font-semibold text-black">
+                  {displayStart} - {displayEnd}
+                </span>{" "}
+                of {totalProducts} results
               </div>
 
               {/* RIGHT CONTROLS */}

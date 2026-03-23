@@ -5,6 +5,7 @@ import {
   Instagram,
   Youtube,
   MessageCircle,
+  ArrowUpRight,
 } from "lucide-react";
 import {
   Select,
@@ -14,163 +15,184 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 export default function Footer() {
   return (
-    <footer className="w-full h-180 p-12 bg-white">
-      <div className="w-full h-120 grid grid-cols-6 gap-4">
-        <div className="w-full h-full col-span-2 flex flex-col space-y-6">
-          <h1 className="text-xl font-bold">
+    <footer className="w-full bg-white mt-8 px-4 md:px-12 py-8 space-y-8">
+      
+      {/* Top Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
+        
+        {/* Column 1: Contact */}
+        <div className="flex flex-col space-y-6 col-span-2">
+          <h1 className="text-xl md:text-2xl font-bold">
             Tech Mart - Best Online Technology Market
           </h1>
           <div>
             <p className="font-light">HOTLINE 24/7</p>
-            <h1 className="text-3xl font-bold text-green-500">
+            <h1 className="text-2xl md:text-3xl font-bold text-green-500">
               {"(055) 553 0670"}
             </h1>
           </div>
-          <div className="font-medium">
+          <div className="font-medium text-sm md:text-base text-gray-700">
             <p>257 Thatcher Road St, Brooklyn, Manhanttan,</p>
             <p>NY 10092</p>
             <p>contact@techmart.com</p>
           </div>
           <ul className="flex space-x-2">
-            <li className="w-10 h-10 rounded-full flex justify-center items-center bg-gray-200">
-              <Twitter />
-            </li>
-            <li className="w-10 h-10 rounded-full flex justify-center items-center bg-gray-200">
-              <Facebook />
-            </li>
-            <li className="w-10 h-10 rounded-full flex justify-center items-center bg-gray-200">
-              <Instagram />
-            </li>
-            <li className="w-10 h-10 rounded-full flex justify-center items-center bg-gray-200">
-              <Youtube />
-            </li>
-            <li className="w-10 h-10 rounded-full flex justify-center items-center bg-gray-200">
-              <MessageCircle />
-            </li>
+            {[Twitter, Facebook, Instagram, Youtube, MessageCircle].map((Icon, idx) => (
+              <li
+                key={idx}
+                className="w-10 h-10 rounded-full flex justify-center items-center bg-gray-200"
+              >
+                <Icon />
+              </li>
+            ))}
           </ul>
         </div>
-        <div className="w-full h-full flex flex-col space-y-6">
+
+        {/* Column 2: Top Categories */}
+        <div className="flex flex-col space-y-6">
           <h1 className="text-xl font-bold">TOP CATEGORIES</h1>
-          <ul className="text-gray-400 font-normal">
-            <li>Laptops</li>
-            <li>Smartphones</li>
-            <li>PC & Computers</li>
-            <li>Tablets</li>
-            <li>Gming & VR</li>
-            <li>Networking</li>
-            <li>Camera</li>
-            <li>Sounds</li>
-            <li>Office Equipment</li>
-            <li>Storage, USB</li>
-            <li>Accessories</li>
-            <li>Monitors</li>
-            <li>Clearance</li>
+          <ul className="text-gray-400 font-normal space-y-1 text-sm md:text-base">
+            {[
+              "Laptops",
+              "Smartphones",
+              "PC & Computers",
+              "Tablets",
+              "Gming & VR",
+              "Networking",
+              "Camera",
+              "Sounds",
+              "Office Equipment",
+              "Storage, USB",
+              "Accessories",
+              "Monitors",
+              "Clearance",
+            ].map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
           </ul>
         </div>
-        <div className="w-full h-full flex flex-col space-y-6">
+
+        {/* Column 3: Company */}
+        <div className="flex flex-col space-y-6">
           <h1 className="text-xl font-bold">COMPANY</h1>
-          <ul className="text-gray-400 font-normal">
-            <li>About TechMart</li>
-            <li>Contact</li>
-            <li>Career</li>
-            <li>SiteMap</li>
-            <li>Store Locations</li>
+          <ul className="text-gray-400 font-normal space-y-1 text-sm md:text-base">
+            {["About TechMart", "Contact", "Career", "SiteMap", "Store Locations"].map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
           </ul>
         </div>
-        <div className="w-full h-full flex flex-col space-y-6">
+
+        {/* Column 4: Help Centre */}
+        <div className="flex flex-col space-y-6">
           <h1 className="text-xl font-bold">HELP CENTRE</h1>
-          <ul className="text-gray-400 font-normal">
-            <li>Customer Service</li>
-            <li>Policy</li>
-            <li>Terms and Conditions</li>
-            <li>Track Order</li>
-            <li>FAQs</li>
-            <li>My Account</li>
-            <li>Product Support</li>
+          <ul className="text-gray-400 font-normal space-y-1 text-sm md:text-base">
+            {[
+              "Customer Service",
+              "Policy",
+              "Terms and Conditions",
+              "Track Order",
+              "FAQs",
+              "My Account",
+              "Product Support",
+            ].map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
           </ul>
         </div>
-        <div className="w-full h-full flex flex-col space-y-6">
+
+        {/* Column 5: Partners */}
+        <div className="flex flex-col space-y-6">
           <h1 className="text-xl font-bold">PARTNERS</h1>
-          <ul className="text-gray-400 font-normal">
-            <li>Become Seller</li>
-            <li>Affiliate</li>
-            <li>Advertise</li>
-            <li>Partnership</li>
-            <li>Shareholder</li>
+          <ul className="text-gray-400 font-normal space-y-1 text-sm md:text-base">
+            {["Become Seller", "Affiliate", "Advertise", "Partnership", "Shareholder"].map(
+              (item, idx) => (
+                <li key={idx}>{item}</li>
+              )
+            )}
           </ul>
         </div>
       </div>
-      <div className="w-full h-40 grid grid-cols-6 gap-4">
-        <div className="w-full h-full flex col-span-2 space-x-4">
+
+      {/* Subscription Section */}
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-8 items-start">
+        
+        {/* Currency & Language Selects */}
+        <div className="flex flex-col md:flex-row gap-4 col-span-2">
           <Select>
-            <SelectTrigger className="w-full h-full max-w-48">
+            <SelectTrigger className="w-full md:max-w-50">
               <SelectValue placeholder="Select Currency" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Accepted Currencies</SelectLabel>
-                <SelectItem value="apple">USD</SelectItem>
-                <SelectItem value="banana">GHS</SelectItem>
-                <SelectItem value="blueberry">EUR</SelectItem>
-                <SelectItem value="grapes">GBP</SelectItem>
-                <SelectItem value="pineapple">ROB</SelectItem>
+                <SelectItem value="USD">USD</SelectItem>
+                <SelectItem value="GHS">GHS</SelectItem>
+                <SelectItem value="EUR">EUR</SelectItem>
+                <SelectItem value="GBP">GBP</SelectItem>
+                <SelectItem value="ROB">ROB</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
+
           <Select>
-            <SelectTrigger className="w-full h-full max-w-48">
+            <SelectTrigger className="w-full md:max-w-50">
               <SelectValue placeholder="Select Language" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Available Languages</SelectLabel>
-                <SelectItem value="apple">Eng</SelectItem>
-                <SelectItem value="banana">Fr</SelectItem>
-                <SelectItem value="blueberry">Man</SelectItem>
-                <SelectItem value="grapes">Jpn</SelectItem>
-                <SelectItem value="pineapple">Rus</SelectItem>
+                <SelectItem value="Eng">Eng</SelectItem>
+                <SelectItem value="Fr">Fr</SelectItem>
+                <SelectItem value="Man">Man</SelectItem>
+                <SelectItem value="Jpn">Jpn</SelectItem>
+                <SelectItem value="Rus">Rus</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
         </div>
-        <div className="w-full h-full col-span-4 space-y-8">
+
+        {/* Subscription */}
+        <div className="col-span-4 flex flex-col space-y-4">
           <h1 className="text-xl font-bold">
-            SUBSCRIBE & GET <span className="text-red-400">10% OFF</span> FOR
-            YOUR FIRST ORDER
+            SUBSCRIBE & GET <span className="text-red-400">10% OFF</span> FOR YOUR FIRST ORDER
           </h1>
-          <div className="w-full">
-            <div className="w-full border-b-2 border-gray-300 pb-2 flex flex-row justify-between font-semibold px-8">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="w-4/5 font-medium text-black"
-              />
-              <a href="" className="text-green-500">
-                SUBSCRIBE
-              </a>
-            </div>
-            <p className="font-normal text-black italic">
-              By subscribing, you've accepted our{" "}
-              <span className="font-medium underline">Privacy Policy</span>
-            </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 items-start">
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              className="border border-gray-300 rounded-md px-4 py-2 w-full sm:w-3/4 focus:outline-none"
+            />
+            <Button variant="link" className="flex items-center gap-2 text-green-500">
+              SUBSCRIBE <ArrowUpRight size={18} />
+            </Button>
           </div>
+
+          <p className="text-black text-sm italic">
+            By subscribing, you've accepted our{" "}
+            <span className="font-medium underline">Privacy Policy</span>
+          </p>
         </div>
       </div>
+
       <hr />
-      <div className="w-full h-10 flex justify-between items-center px-4">
-        <p>&copy; 2026 <span>XianDataCentre</span>.All Rights Reserved</p>
-        <ul className='w-1/3 h-full flex items-center space-x-4'>
-            <li><img src="/logos/paypal.png" alt="" /></li>
-            <li><img src="/logos/mastercard.png" alt="" /></li>
-            <li><img src="/logos/visa.png" alt="" /></li>
-            <li><img src="/logos/stripe.png" alt="" /></li>
-            <li><img src="/logos/klarna.png" alt="" /></li>
+
+      {/* Footer Bottom */}
+      <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <p className="text-sm md:text-base">&copy; 2026 <span className="font-semibold">XianDataCentre</span>. All Rights Reserved</p>
+        <ul className="flex space-x-4">
+          {["/logos/paypal.png","/logos/mastercard.png","/logos/visa.png","/logos/stripe.png","/logos/klarna.png"].map((src, idx) => (
+            <li key={idx}><img src={src} alt="" className="h-6" /></li>
+          ))}
         </ul>
-        <a href="" className="text-lg font-normal text-blue-500">Admin Panel</a>
+        <a href="" className="text-blue-500 font-normal flex items-center text-sm md:text-lg">
+          Admin Panel
+        </a>
       </div>
     </footer>
   );

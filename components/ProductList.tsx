@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function ProductList({children}:{children:React.ReactNode}) {
   return (
-    <div className='w-full h-100 grid grid-cols-5 gap-4'>
-        {children}
+    <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4'>
+      {children}
     </div>
   )
 }
