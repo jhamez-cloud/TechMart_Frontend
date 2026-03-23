@@ -18,7 +18,6 @@ import { Eye,EyeOff } from "lucide-react";
 export default function LoginForm() {
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
 
   return (
     <div className="w-full bg-white rounded-md mt-4 p-6 md:p-10 flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-8">
