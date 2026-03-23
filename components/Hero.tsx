@@ -142,7 +142,7 @@ export default function Hero() {
                 <p>low latency Game Mode</p>
               </div>
 
-              <button className='text-black bg-white py-2 px-4 rounded-md hover:bg-red-600'>
+              <button className='text-black bg-white py-2 px-4 rounded-md hover:bg-[#ac86fd]'>
                 Buy Now
               </button>
             </div>
@@ -173,9 +173,9 @@ export default function Hero() {
             <div className='w-1/2 flex flex-col justify-around'>
               <p>XOMIA</p>
               <h1 className='text-xl font-bold'>SPORTS WATER RESISTANCE WATCH</h1>
-              <button className='bg-black text-white px-4 py-2 rounded-md hover:bg-red-600'>
-                Shop Now
-              </button>
+              <div>
+                <button className='bg-black text-white px-4 py-2 rounded-md hover:bg-red-600'>Shop Now</button>
+              </div>
             </div>
           </div>
 

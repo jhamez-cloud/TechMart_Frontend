@@ -56,7 +56,7 @@ export default function ProductCard (props:Props) {
               <p className='text-red-500 font-bold text-sm md:text-lg'>
                 ${props.new_price}
               </p>
-              <p className='text-gray-500 line-through text-sm'>
+              <p className='text-gray-500 line-through text-lg'>
                 ${props.old_price}
               </p>
             </div>

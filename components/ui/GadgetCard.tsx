@@ -22,7 +22,7 @@ export default function GadgetCard(props:Props) {
             </div>
 
             {/* IMAGE + DESCRIPTION */}
-            <div className='w-full flex flex-col md:flex-col md:space-y-0 md:space-x-4 items-center'>
+            <div className='w-full flex flex-col md:space-y-4 space-y-4 md:flex-col md:space-x-4 items-center'>
                 <div 
                     className='w-full md:w-full h-48 md:h-50 flex items-center bg-cover rounded-md'
                     style={{

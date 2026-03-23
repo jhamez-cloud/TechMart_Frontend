@@ -13,7 +13,7 @@ export default function PromotionBanner() {
       >
         <div className="w-2/3 md:w-full h-full md:justify-center flex flex-col items-center justify-center space-y-4">
           <h1 className="text-3xl md:text-4xl font-bold text-[#FFE400]">10% Back</h1>
-          <p className="text-white text-center font-normal text-sm md:text-base">
+          <p className="text-white text-shadow-black text-center font-normal text-sm md:text-base">
             Earn 10% Cash Back on TechMart.{" "}
             <a href="" className="underline">
               Learn How
@@ -34,13 +34,15 @@ export default function PromotionBanner() {
         </div>
 
         <div className="flex flex-col md:flex-row md:items-center md:space-x-2 mt-4 md:mt-0">
-          <Input
+          <div className="w-full md:w-2/3">
+            <Input
             type="email"
             placeholder="example@email.com..."
-            className="flex-1 text-gray-200"
+            className="text-gray-200 w-full md:flex-1"
           />
-          <Button variant="link" className="mt-2 md:mt-0 flex items-center text-green-400">
-            Send Link <ArrowUpRight className="ml-2 h-4 w-4" />
+          </div>
+          <Button variant="link" className="mt-2 md:mt-0 flex items-center text-green-500 text-lg text-shadow-white font-bold">
+            Send Link <ArrowUpRight className="ml-2 h-4 w-4 " />
           </Button>
         </div>
       </div>

@@ -190,9 +190,12 @@ export default function Footer() {
             <li key={idx}><img src={src} alt="" className="h-6" /></li>
           ))}
         </ul>
-        <a href="" className="text-blue-500 font-normal flex items-center text-sm md:text-lg">
+        <Button
+          className="text-blue-500 font-normal flex items-center text-sm md:text-lg"
+          onClick={()=>window.location.href='http://127.0.0.1:8000/admin/'}
+          >
           Admin Panel
-        </a>
+        </Button>
       </div>
     </footer>
   );
