@@ -23,7 +23,7 @@ export default function LaptopProductPage() {
               alt="phone"
               width={400}
               height={400}
-              className="w-full max-w-[300px] mx-auto object-contain"
+              className="w-full max-w-75 mx-auto object-contain"
             />
           </div>
 

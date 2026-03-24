@@ -22,7 +22,7 @@ export default function PhoneProductPage({ product }: { product: any }) {
               alt={product.name}
               width={260}
               height={260}
-              className="w-48 sm:w-56 lg:w-[260px] h-auto"
+              className="w-48 sm:w-56 lg:w-65 h-auto"
             />
           </div>
 

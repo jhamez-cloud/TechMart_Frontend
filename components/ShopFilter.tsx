@@ -118,7 +118,7 @@ const ShopFilter = () => {
         <div className="flex items-center gap-2 overflow-x-auto">
           <button><ArrowBigLeft /></button>
 
-          <div className="flex-1 min-w-[300px]">
+          <div className="flex-1 min-w-75">
             <ShopList>
               <ProductCard name="iPad Pro 12.9 inch M1 2023, 64GB + WiFi, GPS" old_price={759} new_price={569} discount free_shipping in_stock stock_left={152} image="/images/ipad_pro.png" />
               <ProductCard name="uLosk Mini Case 2.0" discount old_price={2119} new_price={1729} free_shipping stock_left={8} image="/images/ulosk_minicase.png" />

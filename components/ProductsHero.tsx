@@ -21,7 +21,7 @@ export default function ProductsHero() {
 
             {/* ITEM 1 */}
             <CarouselItem>
-              <div className='rounded-md bg-[url("/images/headphone-bg.png")] bg-cover p-6 min-h-[220px] flex items-center'>
+              <div className='rounded-md bg-[url("/images/headphone-bg.png")] bg-cover p-6 min-h-55 flex items-center'>
                 <div className='w-full flex flex-col space-y-3'>
                   <h1 className='text-xl font-bold text-white'>Noise Cancelling</h1>
                   <h2 className='text-lg text-white'>Headphones</h2>
@@ -41,7 +41,7 @@ export default function ProductsHero() {
 
             {/* ITEM 2 */}
             <CarouselItem>
-              <div className='rounded-md bg-[url("/images/xiaomi_phones_shop.png")] bg-cover p-6 min-h-[220px] flex items-center'>
+              <div className='rounded-md bg-[url("/images/xiaomi_phones_shop.png")] bg-cover p-6 min-h-55 flex items-center'>
                 <div className='w-full flex flex-col space-y-3'>
                   <h1 className='text-lg font-bold text-black'>
                     Redmi Note 12 Pro+ 5G
