@@ -12,7 +12,7 @@ export default function LaptopProductPage() {
     <div className="grid grid-rows-[auto_auto] mt-4">
 
       {/* TOP PRODUCT SECTION */}
-      <section className="grid grid-cols-[1.2fr_1.5fr_1fr] gap-6 bg-white p-6 rounded-xl">
+      <section className="grid grid-cols-1 lg:grid-cols-[1.2fr_1.5fr_1fr] gap-6 bg-white p-4 sm:p-6 rounded-xl">
 
         {/* PRODUCT GALLERY */}
         <div className="space-y-8">
@@ -21,13 +21,14 @@ export default function LaptopProductPage() {
             <Image
               src="/images/laptops/macbook_pineapple.png"
               alt="phone"
-              width={260}
-              height={260}
+              width={400}
+              height={400}
+              className="w-full max-w-[300px] mx-auto object-contain"
             />
           </div>
 
           {/* thumbnails */}
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
             <div className="border rounded-md p-2 cursor-pointer">
               <Image src="/images/laptops/laptop_front.png" alt="" width={60} height={60} />
             </div>
@@ -81,7 +82,7 @@ export default function LaptopProductPage() {
           <div className="space-y-2">
             <h3 className="text-sm font-semibold">MEMORY SIZE</h3>
 
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <Button variant="outline">64GB</Button>
               <Button variant="outline">128GB</Button>
               <Button variant="outline">256GB</Button>
@@ -94,7 +95,7 @@ export default function LaptopProductPage() {
           <div className="space-y-2">
             <h3 className="text-sm font-semibold">STORAGE SIZE</h3>
 
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <Button variant="outline">128GB</Button>
               <Button variant="outline">256GB</Button>
               <Button variant="outline">512GB</Button>
@@ -104,9 +105,9 @@ export default function LaptopProductPage() {
 
           <hr className="border-gray-400"/>
 
-          <div className="w-full h-30 rounded-md bg-[#ECF6EC] flex items-center justify-between px-4 py-2">
+          <div className="w-full rounded-md bg-[#ECF6EC] flex flex-col sm:flex-row items-start sm:items-center gap-4 px-4 py-3">
             <img src="/images/gift_box.png" alt="" />
-            <div className="flex flex-col space-y-4 text-lg">
+            <div className="flex flex-col space-y-4 w-full">
                 <ul className="list-disc">
                     <li>Buy <span className="text-red-500">02</span> Boxes and get a <span className="font-bold">Snack Tray</span></li>
                     <li>Buy <span className="text-red-500">04</span> Boxes and get <span className="font-bold">Block Toys</span></li>
@@ -168,8 +169,8 @@ export default function LaptopProductPage() {
                     Add to Cart
                 </Button>
 
-                <Button variant="outline" className="w-full bg-orange-400">
-                    Buy With <img src="/logos/paypal.png" alt="" /> Paypal 
+                <Button variant="outline" className="w-full bg-orange-400 flex items-center justify-center gap-2">
+                  Buy With <img src="/logos/paypal.png" alt="" className="h-5" />
                 </Button>
 
                 </div>
@@ -185,17 +186,17 @@ export default function LaptopProductPage() {
                 {/* payment icons */}
                 <div className="flex flex-col space-y-2 pt-3">
                 <h1 className="text-lg font-semibold">Guarantee Safe Checkout</h1>
-                <img src="/images/payment_methods.png" alt=""/>
+                <img src="/images/payment_methods.png" alt="" className="w-full object-contain" />
                 </div>
             </div>
-            <div className="h-30 bg-gray-200 rounded-lg p-6 flex flex-col items-center justify-center space-y-2">
+            <div className="bg-gray-200 rounded-lg p-6 flex flex-col items-center justify-center space-y-2">
                 <Button variant={'outline'} className="bg-black text-white">Quick Order 24/7</Button>
                 <h1 className="text-3xl text-black font-bold">(055) 553 0670</h1>
             </div>
 
-            <p className="text-gray-400 text-lg flex items-center space-x-2 p-4">
-                <Truck size={24} color="black"/>
-                Ships From <span className="font-bold text-black">&nbsp;United States</span>
+            <p className="text-gray-400 text-sm sm:text-lg flex items-center gap-2 p-4 flex-wrap">
+              <Truck size={24} color="black"/>
+              Ships From <span className="font-bold text-black">&nbsp;United States</span>
             </p>
         </div>
 

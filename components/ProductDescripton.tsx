@@ -1,49 +1,162 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 
 export default function ProductDescripton() {
+
+  const [activeTab, setActiveTab] = useState("description")
+
   return (
-    <div className='w-full min-h-200 bg-white rounded-md py-4 px-10 mt-4'>
-        <div className='w-full h-10 flex items-center justify-between space-x-6 mb-8'>
-            <div className='flex items-center space-x-10'>
-                <h1 className='text-xl font-bold'>DESCRIPTION</h1>
-                <a href="" className='text-xl font-normal text-gray-500'>REVIEW(S)</a>
-                <a href="" className='text-xl font-normal text-gray-500'>ADDITIONAL INFORMATION</a>
-            </div>
-            <a href="" className='text-lg font-mono text-gray-400'>View All</a>
+    <div className='w-full bg-white rounded-md mt-4 px-4 lg:px-10 py-6 space-y-6'>
+
+      {/* TABS HEADER */}
+      <div className='w-full border-b flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
+
+        {/* LEFT TABS */}
+        <div className='flex flex-wrap gap-6 text-sm lg:text-base font-medium'>
+
+          <button
+            onClick={() => setActiveTab("description")}
+            className={`pb-2 ${
+              activeTab === "description"
+                ? "border-b-2 border-black text-black font-bold"
+                : "text-gray-500"
+            }`}
+          >
+            Description
+          </button>
+
+          <button
+            onClick={() => setActiveTab("reviews")}
+            className={`pb-2 ${
+              activeTab === "reviews"
+                ? "border-b-2 border-black text-black font-bold"
+                : "text-gray-500"
+            }`}
+          >
+            Reviews (152)
+          </button>
+
+          <button
+            onClick={() => setActiveTab("info")}
+            className={`pb-2 ${
+              activeTab === "info"
+                ? "border-b-2 border-black text-black font-bold"
+                : "text-gray-500"
+            }`}
+          >
+            Additional Info
+          </button>
+
         </div>
-        <div className='w-full space-y-3'>
-            <p>
-                Built for ultra-fast performance, the thin and lightweight Samsung Galaxy Tab S2 goes anywhere you go. Photos, movies and documents pop on a crisp, clear Super AMOLED display. Expandablememory lets you enjoy more of your favorite content. And connecting and sharing between all your Samsung devices is easier than ever. Welcome to life with the reimagined Samsung Galaxy TabS2. Watch thev world come to life on your tablet's <span className='text-lg font-semibold'>Super AMOLED display</span> * . With deep contrast, rich colors and crisp details, you won't miss a thing
+
+        {/* RIGHT */}
+        <button className='text-sm text-gray-400 hover:text-black'>
+          View All
+        </button>
+
+      </div>
+
+
+      {/* ================= DESCRIPTION ================= */}
+      {activeTab === "description" && (
+        <div className='space-y-6'>
+
+          <p className='text-sm lg:text-base text-gray-600 leading-relaxed'>
+            Built for ultra-fast performance, the thin and lightweight Samsung Galaxy Tab S2 goes anywhere you go.
+            Photos, movies and documents pop on a crisp, clear 
+            <span className='font-semibold text-black'> Super AMOLED display</span>.
+          </p>
+
+          <img
+            src="/images/samsung_product/product_description_banner1.png"
+            alt=""
+            className='w-full h-48 sm:h-64 lg:h-90 object-cover rounded-md'
+          />
+
+          <p className='text-center text-xs text-gray-400 italic'>
+            * Ideal for office tasks with 4:3 display ratio
+          </p>
+
+          {/* FROM MANUFACTURER */}
+          <div className='space-y-4'>
+            <h1 className='text-lg lg:text-xl font-bold'>From the manufacturer</h1>
+
+            <div className='space-y-2 text-sm text-gray-600'>
+              <p>
+                Dive into blockbuster movies. Switch apps quickly with improved octa-core processor.
+              </p>
+              <p>
+                Expand memory up to 128GB and enjoy seamless Samsung device integration.
+              </p>
+            </div>
+
+            {/* IMAGES */}
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
+              <img src="/images/samsung_product/from_manifacturer.png" alt="" className='w-full rounded-md'/>
+              <img src="/images/samsung_product/from_manifacturer2.png" alt="" className='w-full rounded-md'/>
+            </div>
+
+          </div>
+
+          {/* COLLAPSIBLE TEXT */}
+          <div className='space-y-2'>
+            <h1 className='text-lg font-bold'>Samsung Galaxy Tab S2</h1>
+
+            <p className='text-sm text-gray-500 line-clamp-4'>
+              The Samsung Galaxy Tab S2 offers dual cameras and premium apps optimized for your tablet experience.
             </p>
-            <img src="/images/samsung_product/product_description_banner1.png" alt="" className='w-full h-90 rounded-md' />
-            <div className='text-center'>
-                <p className='text-gray-400 italic font-light'>* The Galaxy Tab S2’s 4 : 3 ratio display provides you with an ideal environment for performing office tasks.</p>
-            </div>
+
+            <button className='text-blue-500 text-sm font-medium'>
+              Show more
+            </button>
+          </div>
+
         </div>
-        <div className='space-y-4'>
-            <h1 className='text-xl font-bold text-black'>From the manifacturer</h1>
-            <div className='space-y-2'>
-                <p>
-                    Dive into the blockbuster movies you can't wait to see. Switch between your favorite apps quickly and easily. The new and improved octa-core processor gives you the power and speed you need to see more and do more. Expand your tablet's memory from 32GB to up to an additional 128GB and enjoy more of your favorite music, photos, movies and games on the go with a microSD card.With Quick Connect, start a show on your Smart TV and, with the touch of a button, take it with you by moving it to your Galaxy Tab S2.
-                </p>
-                <p>
-                    Or send videos and photos from your tablet screen to your TV screen to share with everyone in the room. Work effortlessly between your Samsung tablet and Samsung smartphone with SideSync.Quickly drag and drop photos between devices. And even respond to a call from your smartphone right on your tablet screen.
-                </p>
-            </div>
-            <div className='w-full flex justify-between space-x-2'>
-                <img src="/images/samsung_product/from_manifacturer.png" alt="" className='w-1/2'/>
-                <img src="/images/samsung_product/from_manifacturer2.png" alt="" className='flex-1'/>
-            </div>
+      )}
+
+
+      {/* ================= REVIEWS ================= */}
+      {activeTab === "reviews" && (
+        <div className='space-y-4 text-sm text-gray-600'>
+          <h1 className='font-bold text-lg'>Customer Reviews</h1>
+          <p>No reviews yet. Be the first to review this product.</p>
         </div>
-        <div className='w-full'>
-            <h1 className='text-xl font-bold text-black'>Samsung Galaxy Tab S2, 8-inch, White</h1>
-            <div>
-                <p className='fade-out-20 text-gray-300'>
-                    The Samsung Galaxy Tab S2 offers dual cameras: a rear-facing 8-megapixel camera with Auto Focus and a 2.1-megapixel camera on the front. Take high-quality pictures and video or video chat with friends, family, and colleagues. Customize your Galaxy Tab S2 with the apps you use most. The Samsung Galaxy Essentials widget provides a collection of premium complimentary apps optimized for your tablet screen. Select and download the apps you want to instantly upgrade your tablet experience.
-                </p>
+      )}
+
+
+      {/* ================= ADDITIONAL INFO ================= */}
+      {activeTab === "info" && (
+        <div className='space-y-4 text-sm text-gray-600'>
+
+          <h1 className='font-bold text-lg'>Product Details</h1>
+
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+
+            <div className='flex justify-between border-b py-2'>
+              <span className='font-medium'>Brand</span>
+              <span>Samsung</span>
             </div>
-            <p className='text-blue-400 font-medium'><a href="">SHOW MORE</a></p>
+
+            <div className='flex justify-between border-b py-2'>
+              <span className='font-medium'>Display</span>
+              <span>Super AMOLED</span>
+            </div>
+
+            <div className='flex justify-between border-b py-2'>
+              <span className='font-medium'>Storage</span>
+              <span>128GB</span>
+            </div>
+
+            <div className='flex justify-between border-b py-2'>
+              <span className='font-medium'>Camera</span>
+              <span>8MP Rear</span>
+            </div>
+
+          </div>
+
         </div>
+      )}
+
     </div>
   )
 }
