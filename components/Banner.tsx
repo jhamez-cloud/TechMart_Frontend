@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 export default function Banner() {
   return (
     <div className="w-full min-h-16 md:min-h-20 p-3 md:p-4 bg-green-400 text-white flex justify-center items-center mt-6 md:mt-8 rounded-md">
-      <div className="w-full max-w-full flex flex-col md:flex-row items-center justify-center md:justify-between gap-2 md:gap-4">
+      <div className="w-full max-w-full flex flex-col md:flex-row items-center justify-center md:justify-between md:px-32 gap-2 md:gap-4">
         <p className="flex flex-wrap md:flex-nowrap items-center justify-center md:justify-start text-center md:text-left text-sm md:text-base gap-1 md:gap-2">
           <Star className="w-4 h-5 md:w-5 shrink-0" />
           <span className="whitespace-nowrap">Member get</span>

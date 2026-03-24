@@ -32,7 +32,7 @@ export default function Category(props:Props) {
               {props.carousel_description}
             </p>
             <button className='bg-black text-white text-xs md:text-sm font-semibold py-1 px-3 rounded-md w-fit'>
-              SHOP NOW
+              <a href="/products/phones">SHOP NOW</a>
             </button>
           </div>
         </div>

@@ -22,24 +22,28 @@ export default function Brands() {
           image='/images/zujmax_brand.png'
           title='Zumac Steel Computer Case'
           description='And an option to upgrade every 3 years'
+          link='/products/laptops'
         />
 
         <BrandCard 
           image='/images/gaming_monitor.png'
           title='Summer Sale with sale up to 50% OFF for curved gaming monitor'
           description='Limited Time Offer.Hurry Up.'
+          link='/products/laptops'
         />
 
         <BrandCard 
           image='/images/gaming_chair.png'
           title='Summer Sale with sale up to 50% OFF for foam gaming chair'
           description='Limited Time Offer.Hurry Up.'
+          link='/products/accessories'
         />
 
         <BrandCard 
           image='/images/ipad_pro_brand.png'
           title='iPad Pro Mini 6 - Powerful in hand'
           description='From $19.99/month for 36 months.$280.35 final payment due in month 37.'
+          link='/products/phones'
         />
 
       </div>

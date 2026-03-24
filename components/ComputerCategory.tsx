@@ -34,7 +34,7 @@ export default function ComputerCategory(props: Props) {
               Start from <span className='text-green-400'>${props.carousel_price}</span>
             </p>
             <button className='bg-black text-white text-xs md:text-sm font-semibold py-1 px-3 rounded-md w-fit'>
-              SHOP NOW
+              <a href="/products/laptops">SHOP NOW</a>
             </button>
           </div>
         </div>
