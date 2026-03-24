@@ -53,10 +53,10 @@ export default function ProductCard (props:Props) {
         <div>
           {props.discount ? (
             <div className='flex justify-center gap-2 flex-wrap'>
-              <p className='text-red-500 font-bold text-sm md:text-lg'>
+              <p className='text-red-500 font-bold md:text-lg'>
                 ${props.new_price}
               </p>
-              <p className='text-gray-500 line-through text-lg'>
+              <p className='text-gray-500 line-through md:text-lg'>
                 ${props.old_price}
               </p>
             </div>

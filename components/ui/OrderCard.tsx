@@ -1,97 +1,102 @@
 import React from 'react'
-import { BadgeCheck,BadgeX,ShoppingCart,Plus,Minus} from 'lucide-react'
+import { BadgeCheck, BadgeX, ShoppingCart, Plus, Minus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 import { Input } from "@/components/ui/input"
 
-interface Props{
-    name:string,
-    image:string,
-    price?:number,
-    old_price?:number,
-    new_price?:number,
-    discount?:boolean,
-    just_in?:boolean,
-    free_shipping?:boolean,
-    shipping_fee?:number,
-    free_gift?:boolean,
-    in_stock?:boolean | 'pre'
-    stock_left:number | null
+interface Props { 
+    name:string, 
+    image:string, 
+    price?:number, 
+    old_price?:number, 
+    new_price?:number, 
+    discount?:boolean, 
+    just_in?:boolean, 
+    free_shipping?:boolean, 
+    shipping_fee?:number, 
+    free_gift?:boolean, 
+    in_stock?:boolean | 'pre' ,
+    stock_left:number | null 
 }
 
-export default function OrderCard(props:Props) {
+export default function OrderCard(props: Props) {
   return (
-    <div className='relative w-8/10 h-60'>
-        <span
-            className={`
-                ${props.discount || props.just_in
-                ? 'absolute -top-1 -left-2 px-2 py-1 rounded-md text-white text-sm'
-                : 'hidden'}
-                ${props.discount
-                ? 'bg-green-400'
-                : props.just_in
-                ? 'bg-black'
-                : ''}
-            `}
-        >
-            {props.discount
-                ? `SAVE $${props.old_price! - props.new_price!}.00`
-                : props.just_in
-                ? 'NEW'
-                : null}
-        </span>
-        <span className='absolute w-8 h-8 flex justify-center items-center bg-gray-200 -top-1 -right-2 rounded-full'>
-            <ShoppingCart size={20} />
-        </span>
-        <div className='w-full flex justify-center space-y-2'>
-            <figure className='w-1/4 h-full flex items-center'>
-                <img src={props.image} alt={props.name} />
-            </figure>
-            <div className='w-3/4 h-full flex flex-col space-y-2'> 
-                <div className='w-full pl-20'><span className='text-gray-400 font-light'>({props.stock_left})</span></div>
-                <h1 className='font-semibold text-black'>{props.name}</h1>
-                <div className='w-full flex space-x-2'>
-                    {
-                        props.discount
-                        ?
-                            <div className='w-full flex items-center space-x-2'>
-                                <p className='text-xl font-bold text-red-500 font-mono'>${props.new_price}.00</p>
-                                <p className='text-xl font-bold text-gray-500 font-mono line-through'>${props.old_price}.00</p>
-                            </div>
-                        :
-                            <p className='text-xl font-bold text-black'>${props.price}.00</p>
-                    }
-                </div>
-                <ButtonGroup>
-                    <Button variant="outline" aria-label="increase">
-                        <Plus />
-                    </Button>
-                    <Input placeholder="0" readOnly type='number' className='w-10'/>
-                    <Button variant="outline" aria-label="decrease">
-                        <Minus />
-                    </Button>
-                </ButtonGroup>
-                <div className='flex flex-row space-x-2 items-center'>
-                    <button className={`p-1 bg-[#f1f9f2] text-green-400 text-xs font-light rounded-md ${props.free_shipping ? 'text-green-400 ' : 'text-black'}`}>{props.free_shipping?'FREE SHIPPING':props.shipping_fee?.toString() + ' SHIPPING'}</button>
-                    <button className={`${props.free_gift ? 'p-1 bg-[#f7efed] text-red-400 text-xs font-light rounded-md' : 'hidden'}`}>FREE GIFT</button>
-                </div>
-                <div className='w-full'>
-                    {
-                        props.in_stock
-                        ?
-                            <div className='w-full flex items-center space-x-1'>
-                                <BadgeCheck size={16} color='green'/>
-                                <p className='text-sm font-normal'>In Stock</p>
-                            </div>
-                        :
-                            <div className='w-full flex items-center space-x-1'>
-                                <BadgeX size={16} color='red'/>
-                                <p className='text-sm font-normal'>Out Of Stock</p>
-                            </div>
-                    }
-                </div>
+    <div className='relative w-full rounded-md border p-4 flex flex-col md:flex-row gap-4'>
+
+      {/* BADGES */}
+      <span className={`
+        ${props.discount || props.just_in ? 'absolute -top-2 -left-2 px-2 py-1 rounded-md text-white text-xs' : 'hidden'}
+        ${props.discount ? 'bg-green-400' : props.just_in ? 'bg-black' : ''}
+      `}>
+        {props.discount
+          ? `SAVE $${props.old_price! - props.new_price!}`
+          : props.just_in ? 'NEW' : null}
+      </span>
+
+      <span className='absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full'>
+        <ShoppingCart size={18} />
+      </span>
+
+      {/* IMAGE */}
+      <div className='w-full md:w-1/4 flex justify-center items-center'>
+        <img src={props.image} alt={props.name} className='max-h-28 object-contain' />
+      </div>
+
+      {/* CONTENT */}
+      <div className='w-full md:w-3/4 flex flex-col gap-2'>
+
+        <span className='text-gray-400 text-xs'>({props.stock_left})</span>
+
+        <h1 className='font-semibold text-sm md:text-base'>{props.name}</h1>
+
+        {/* PRICE */}
+        <div>
+          {props.discount ? (
+            <div className='flex items-center gap-2'>
+              <p className='text-lg font-bold text-red-500'>${props.new_price}</p>
+              <p className='text-sm line-through text-gray-500'>${props.old_price}</p>
             </div>
+          ) : (
+            <p className='text-lg font-bold'>${props.price}</p>
+          )}
         </div>
+
+        {/* QUANTITY */}
+        <ButtonGroup>
+          <Button variant="outline"><Plus /></Button>
+          <Input readOnly type='number' className='w-12 text-center' />
+          <Button variant="outline"><Minus /></Button>
+        </ButtonGroup>
+
+        {/* TAGS */}
+        <div className='flex flex-wrap gap-2 text-xs'>
+          <span className='p-1 bg-[#f1f9f2] text-green-400 rounded-md'>
+            {props.free_shipping ? 'FREE SHIPPING' : `${props.shipping_fee} SHIPPING`}
+          </span>
+
+          {props.free_gift && (
+            <span className='p-1 bg-[#f7efed] text-red-400 rounded-md'>
+              FREE GIFT
+            </span>
+          )}
+        </div>
+
+        {/* STOCK */}
+        <div className='flex items-center gap-1 text-sm'>
+          {props.in_stock ? (
+            <>
+              <BadgeCheck size={16} color='green' />
+              <p>In Stock</p>
+            </>
+          ) : (
+            <>
+              <BadgeX size={16} color='red' />
+              <p>Out Of Stock</p>
+            </>
+          )}
+        </div>
+
+      </div>
     </div>
   )
 }
