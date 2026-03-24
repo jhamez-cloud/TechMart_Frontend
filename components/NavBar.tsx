@@ -105,7 +105,7 @@ export default function NavBar() {
           {/* ICONS */}
           <ul className="flex items-center space-x-3">
             <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-              <CircleUser size={20} />
+              <a href="/pages/profile" title='Account Page'><CircleUser size={20}/></a>
             </li>
             <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
               <Heart size={16} />
@@ -213,7 +213,7 @@ export default function NavBar() {
 
             {/* DESKTOP NAV */}
             <nav className="hidden md:block w-2/3">
-              <ul className="flex space-x-6 items-center">
+              <ul className="w-full ml-16 flex space-x-6 items-center">
 
                 <li className="font-semibold">
                   <NavLink href="/">HOME</NavLink>
@@ -261,9 +261,15 @@ export default function NavBar() {
             {/* RIGHT SIDE (HIDDEN ON SMALL) */}
             <div className="hidden md:flex w-1/3 items-center justify-between">
               <ul className="flex space-x-3">
-                <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center"><CircleUser size={20} /></li>
-                <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center"><Heart size={16} /></li>
-                <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center"><BadgeInfo size={20} /></li>
+                <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                  <a href="/pages/profile" title='Account Page'><CircleUser size={20} /></a>
+                </li>
+                <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                  <a href="/pages/checkout" title='WishList'><Heart size={16} /></a>
+                </li>
+                <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                  <a href="/pages/about" title='About Page'><BadgeInfo size={20} /></a>
+                </li>
               </ul>
 
               <div>

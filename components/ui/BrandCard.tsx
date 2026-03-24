@@ -4,7 +4,8 @@ import { Button } from './button'
 interface Props{
     image:string,
     title:string,
-    description:string
+    description:string,
+    link:string
 }
 
 export default function BrandCard(props:Props) {
@@ -18,7 +19,9 @@ export default function BrandCard(props:Props) {
         </figure>
         <div className='w-full space-y-2'>
             <p className='text-gray-400 font-normal'>{props.description}</p>
-            <button className='border border-green-400 text-green-400 bg-white rounded-md px-2 py-1'>SHOP NOW</button>
+            <button className='border border-green-400 text-green-400 bg-white rounded-md px-2 py-1' as-child>
+                <a href={props.link}>SHOP NOW</a>
+            </button>
         </div>
     </div>
   )
