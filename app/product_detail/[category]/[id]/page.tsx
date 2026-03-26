@@ -15,10 +15,11 @@ import ApiLoading from '@/components/ApiLoading'
 
 export default function page() {
   
-  const {category,id} = useParams()
+  const {id} = useParams()
+  ///console.log("category is: ",category," and id is: ",id)
 
   const Django_Url = process.env.NEXT_PUBLIC_DJANGO_URL
-  const {data:product,error:error} = useSWR(`${Django_Url}/api/v1/products/?category=${category}&id=${id}`)
+  const {data:product,error:error} = useSWR(`${Django_Url}/api/v1/products/${id}`)
 
   if (error) return <ApiError/>;
   if (!product) return <ApiLoading/>;
