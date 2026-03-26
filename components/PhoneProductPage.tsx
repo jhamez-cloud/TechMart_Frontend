@@ -5,9 +5,30 @@ import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "./ui/button-group"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "./ui/checkbox"
-import { Plus, Minus, Twitter, Instagram, Youtube, Facebook, MessageCircle, Star, Heart, Truck } from "lucide-react"
+import {
+  Plus,
+  Minus,
+  Twitter,
+  Instagram,
+  Youtube,
+  Facebook,
+  MessageCircle,
+  Star,
+  Heart,
+  Truck
+} from "lucide-react"
 
-export default function PhoneProductPage({ product }: { product: any }) {
+import { Product } from "@/types"
+
+export default function PhoneProductPage({ product }: { product: Product }) {
+
+  const firstVariant = product.variants?.[0]
+
+  const price = Number(firstVariant?.price || 0)
+  const stock = firstVariant?.stock || 0
+
+  const thumbnails = product.variants?.filter(v => v.image)
+
   return (
     <div className="grid grid-rows-[auto_auto] mt-4 gap-4">
 
@@ -23,15 +44,16 @@ export default function PhoneProductPage({ product }: { product: any }) {
               width={260}
               height={260}
               className="w-48 sm:w-56 lg:w-65 h-auto"
+              unoptimized
             />
           </div>
 
-          {/* thumbnails */}
-          {product.thumbnails?.length > 0 && (
+          {/* thumbnails (VARIANTS) */}
+          {thumbnails?.length > 0 && (
             <div className="flex gap-2 lg:gap-3 flex-wrap justify-center lg:justify-start">
-              {product.thumbnails.map((img: string, i: number) => (
+              {thumbnails.map((v, i) => (
                 <div key={i} className="border rounded-md p-2 cursor-pointer">
-                  <Image src={img} alt="" width={60} height={60} />
+                  <Image src={v.image!} alt="" width={60} height={60} unoptimized/>
                 </div>
               ))}
             </div>
@@ -43,34 +65,34 @@ export default function PhoneProductPage({ product }: { product: any }) {
 
           <h1 className="text-lg font-semibold">{product.name}</h1>
 
-          {/* rating */}
+          {/* rating (static for now) */}
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <div className="flex text-yellow-400">
               {[...Array(5)].map((_, i) => <Star key={i} size={16} />)}
             </div>
-            <span>({product.rating_count || 0})</span>
+            <span>(0)</span>
           </div>
 
           {/* price */}
           <div className="text-xl font-bold text-green-600">
-            ${product.price}
+            ${price}
           </div>
 
           <p className="text-sm text-gray-500">
-            {product.description}
+            {product.description || "No description available"}
           </p>
 
           <hr />
 
           {/* COLOR */}
-          {product.variants?.some((v:any)=>v.color) && (
+          {product.variants?.some(v => v.color) && (
             <div className="space-y-2">
               <h3 className="text-lg font-bold text-gray-600">
                 COLOR
               </h3>
 
               <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-                {product.variants.map((v:any,i:number)=>(
+                {product.variants.map((v, i) => (
                   v.color && (
                     <figure key={i} className="border rounded-md p-2 flex flex-col sm:flex-row items-center gap-2">
                       {v.image && <img src={v.image} alt="" />}
@@ -84,15 +106,15 @@ export default function PhoneProductPage({ product }: { product: any }) {
             </div>
           )}
 
-          {/* MEMORY */}
-          {product.variants?.some((v:any)=>v.storage) && (
+          {/* MEMORY (STORAGE) */}
+          {product.variants?.some(v => v.storage) && (
             <div className="space-y-2">
               <h3 className="text-sm font-semibold">MEMORY SIZE</h3>
               <div className="flex flex-wrap gap-2">
-                {product.variants.map((v:any,i:number)=>(
+                {product.variants.map((v, i) => (
                   v.storage && (
                     <Button key={i} variant="outline">
-                      {v.storage}
+                      {v.storage}GB
                     </Button>
                   )
                 ))}
@@ -102,25 +124,22 @@ export default function PhoneProductPage({ product }: { product: any }) {
 
           <hr />
 
-          {/* PROMO */}
-          {product.promo && (
-            <div className="w-full rounded-md bg-[#ECF6EC] flex flex-col sm:flex-row items-center gap-4 px-4 py-3">
-              <img src="/images/gift_box.png" alt="" />
-              <div className="text-sm">
-                <ul className="list-disc">
-                  {product.promo.map((p:string,i:number)=>(
-                    <li key={i}>{p}</li>
-                  ))}
-                </ul>
-              </div>
+          {/* PROMO (fallback static) */}
+          <div className="w-full rounded-md bg-[#ECF6EC] flex flex-col sm:flex-row items-center gap-4 px-4 py-3">
+            <img src="/images/gift_box.png" alt="" />
+            <div className="text-sm">
+              <ul className="list-disc">
+                <li>Buy 2 → Snack Tray</li>
+                <li>Buy 4 → Block Toys</li>
+              </ul>
             </div>
-          )}
+          </div>
 
           {/* META */}
           <div className="text-sm">
-            <p><b>SKU:</b> {product.sku}</p>
-            <p><b>Category:</b> {product.category}</p>
-            <p><b>Brand:</b> {product.brand}</p>
+            <p><b>SKU:</b> {product.id}</p>
+            <p><b>Category:</b> {product.category?.title}</p>
+            <p><b>Brand:</b> {product.brand?.title}</p>
           </div>
 
           {/* SOCIAL */}
@@ -138,9 +157,10 @@ export default function PhoneProductPage({ product }: { product: any }) {
         <div className="flex flex-col space-y-4 w-full">
 
           <div className="bg-gray-200 rounded-lg p-4 space-y-4 w-full">
-            <div className="text-xl font-bold">${product.price}</div>
+            <div className="text-xl font-bold">${price}</div>
+
             <div className="text-sm text-green-600">
-              {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+              {stock > 0 ? 'In Stock' : 'Out of Stock'}
             </div>
 
             <ButtonGroup>
@@ -162,62 +182,60 @@ export default function PhoneProductPage({ product }: { product: any }) {
           </div>
 
           <div className="bg-gray-200 rounded-lg p-4 text-center">
-            <h1 className="text-xl font-bold">{product.contact || "(055) 553 0670"}</h1>
+            <h1 className="text-xl font-bold">(055) 553 0670</h1>
           </div>
 
           <p className="text-sm flex items-center gap-2">
-            <Truck size={20}/> Ships from {product.origin || "USA"}
+            <Truck size={20}/> Ships from USA
           </p>
 
         </div>
 
       </section>
 
-      {/* FREQUENTLY BOUGHT */}
-      {product.bundle && (
-        <section className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+      {/* FREQUENTLY BOUGHT (static fallback preserved) */}
+      <section className="grid grid-cols-1 lg:grid-cols-4 gap-4">
 
-          <div className="lg:col-span-3 bg-white rounded-md p-4 lg:p-8 space-y-4">
+        <div className="lg:col-span-3 bg-white rounded-md p-4 lg:p-8 space-y-4">
 
-            <h1>FREQUENTLY BOUGHT TOGETHER</h1>
+          <h1>FREQUENTLY BOUGHT TOGETHER</h1>
 
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
-              <div className="lg:col-span-3 space-y-6">
+            <div className="lg:col-span-3 space-y-6">
 
-                <div className="flex flex-wrap gap-3 justify-center lg:justify-start items-center">
-                  {product.bundle.map((b:any,i:number)=>(
-                    <img key={i} src={b.image} />
-                  ))}
-                </div>
-
-                <ul className="space-y-2 text-sm">
-                  {product.bundle.map((b:any,i:number)=>(
-                    <li key={i} className="flex items-center gap-2">
-                      <Checkbox /> {b.name}
-                    </li>
-                  ))}
-                </ul>
-
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start items-center">
+                <img src="/images/samsung_s9_plus.png" alt="" />
+                <Plus />
+                <img src="/images/boso_headphone.png" alt="" />
+                <Plus />
+                <img src="/images/smart_watch.png" alt="" />
               </div>
 
-              <div className="space-y-4">
-                <h1 className="text-xl font-bold">${product.bundle_total}</h1>
-                <Button className="w-full bg-green-500">Add All</Button>
-              </div>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-center gap-2"><Checkbox /> Phone</li>
+                <li className="flex items-center gap-2"><Checkbox /> Headphone</li>
+                <li className="flex items-center gap-2"><Checkbox /> Watch</li>
+              </ul>
 
+            </div>
+
+            <div className="space-y-4">
+              <h1 className="text-xl font-bold">$767</h1>
+              <Button className="w-full bg-green-500">Add All</Button>
             </div>
 
           </div>
 
-          {/* ADS */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-            <div className='bg-[url("/images/sales-off.png")] bg-cover h-40 rounded-md'></div>
-            <div className='bg-[url("/images/sales-off2.png")] bg-cover h-40 rounded-md'></div>
-          </div>
+        </div>
 
-        </section>
-      )}
+        {/* ADS */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+          <div className='bg-[url("/images/sales-off.png")] bg-cover h-40 rounded-md'></div>
+          <div className='bg-[url("/images/sales-off2.png")] bg-cover h-40 rounded-md'></div>
+        </div>
+
+      </section>
 
     </div>
   )
