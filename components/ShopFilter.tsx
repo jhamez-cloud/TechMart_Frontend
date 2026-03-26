@@ -28,22 +28,7 @@ import ApiError from "./ApiError";
 import useSWR from "swr";
 import ApiLoading from "./ApiLoading";
 
-interface Product {
-  id: number;
-  name: string;
-  image: string;
-  price?: number;
-  old_price?: number;
-  new_price?: number;
-  discount?: boolean;
-  just_in?: boolean;
-  free_shipping?: boolean;
-  shipping_fee?: number;
-  free_gift?: boolean;
-  stock_left: number;
-  in_stock: boolean;
-  category?: 'mobilephones' | 'laptops' | 'accessories'
-}
+import { Product } from "@/types";
 
 const ShopFilter = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -350,7 +335,16 @@ const ShopFilter = () => {
         {/* PRODUCTS */}
         <ShopList>
           {paginatedProducts.map(product => (
-            <ProductCard key={product.id} {...product}/>
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              image={product.image}
+              price={Number(product.variants?.[0]?.price)}
+              stock_left={product.variants?.[0]?.stock || 0}
+              in_stock={product.variants?.[0]?.stock > 0}
+              category={product.category}
+            />
           ))}
         </ShopList>
 

@@ -3,6 +3,8 @@ import React from 'react'
 import { BadgeCheck, BadgeX, ShoppingCart } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
+import { Category } from '@/types'
+
 interface Props{
     id?: number,
     name: string,
@@ -17,14 +19,16 @@ interface Props{
     free_gift?: boolean,
     in_stock?: boolean | 'pre',
     stock_left: number | null,
-    category?: 'laptops' | 'mobilephones' | 'accessories'
+    category?: Category
 }
 
 export default function ProductCard(props: Props) {
   const router = useRouter()
 
   const handleClick = () => {
-    router.push(`/product_detail/${props.category}_detail/${props.id}`)
+    router.push(`/product_detail/${props.category?.slug}/${props.id}`)
+    console.log("The Category of selected product: " , props.category)
+    console.log("The base id of selected product" , props.id)
   }
 
   return (
