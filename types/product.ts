@@ -48,6 +48,7 @@ export interface Product {
   free_gift: boolean
   free_shipping: boolean
   just_in: boolean
+  shipping_fee:number
 
   variants: ProductVariant[]
   images: ProductImage[]
