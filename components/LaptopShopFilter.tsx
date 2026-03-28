@@ -27,21 +27,7 @@ import useSWR from 'swr';
 import ApiError from './ApiError';
 import ApiLoading from './ApiLoading';
 
-interface Product{
-  id:number,
-  name:string,
-  image:string,
-  price?:number,
-  old_price?:number,
-  new_price?:number,
-  discount?:boolean,
-  just_in?:boolean,
-  free_shipping?:boolean,
-  shipping_fee?:number,
-  free_gift?:boolean,
-  stock_left:number,
-  in_stock:boolean,
-}
+import { Product } from '@/types';
 
 const LaptopShopFilter = () => {
 
@@ -305,8 +291,22 @@ const LaptopShopFilter = () => {
           {/* PRODUCTS */}
           <div className="mt-4">
             <ShopList>
-              {paginatedProducts.map(p => (
-                <ProductCard key={p.id} {...p}/>
+              {paginatedProducts.map(product => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  name={product.name}
+                  image={product.image}
+                  price={Number(product.variants?.[0]?.price)}
+                  stock_left={product.variants?.[0]?.stock || 0}
+                  in_stock={product.variants?.[0]?.stock > 0}
+                  category={product.category}
+                  free_shipping={product.free_shipping}
+                  free_gift={product.free_gift}
+                  shipping_fee={product.shipping_fee}
+                  just_in={product.just_in}
+
+                />
               ))}
             </ShopList>
           </div>

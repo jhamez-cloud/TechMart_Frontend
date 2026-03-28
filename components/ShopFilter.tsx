@@ -344,6 +344,10 @@ const ShopFilter = () => {
               stock_left={product.variants?.[0]?.stock || 0}
               in_stock={product.variants?.[0]?.stock > 0}
               category={product.category}
+              free_shipping={product.free_shipping}
+              free_gift={product.free_gift}
+              shipping_fee={product.shipping_fee}
+              just_in={product.just_in}
             />
           ))}
         </ShopList>

@@ -1,5 +1,6 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
+import { CartContext } from '@/context'
 import NavLink from './ui/NavLink'
 import {
   Search,
@@ -34,6 +35,11 @@ export default function NavBar() {
   const [open, setOpen] = useState(false)
   const [pagesOpen, setPagesOpen] = useState(false)
   const [productsOpen, setProductsOpen] = useState(false)
+
+  const context = useContext(CartContext)
+  if (!context) throw new Error("Cart Context Not Found")
+
+  const {cartSize} = context
 
   return (
     <div className="w-full h-auto">
@@ -115,8 +121,25 @@ export default function NavBar() {
             </li>
             <li>
               <div className="flex space-x-2 items-center">
-                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                  <ShoppingCart size={16} />
+                <div className="relative">
+                  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition cursor-pointer">
+                    <ShoppingCart size={18} className="text-gray-700" />
+                  </div>
+
+                  {cartSize > 0 && (
+                    <span
+                      className="
+                        absolute -top-1 -right-1
+                        min-w-4.5 h-4.5 px-1
+                        flex items-center justify-center
+                        text-[11px] font-semibold text-white
+                        bg-green-500 rounded-full
+                        shadow-sm
+                      "
+                    >
+                      {cartSize}
+                    </span>
+                  )}
                 </div>
                 <div>
                   <p className="font-light text-sm">Cart</p>
@@ -278,8 +301,25 @@ export default function NavBar() {
               </div>
 
               <div className="flex space-x-2 items-center">
-                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                  <ShoppingCart size={16} />
+                <div className="relative">
+                  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition cursor-pointer">
+                    <ShoppingCart size={18} className="text-gray-700" />
+                  </div>
+
+                  {cartSize > 0 && (
+                    <span
+                      className="
+                        absolute -top-1 -right-1
+                        min-w-4.5 h-4.5 px-1
+                        flex items-center justify-center
+                        text-[11px] font-semibold text-white
+                        bg-green-500 rounded-full
+                        shadow-sm
+                      "
+                    >
+                      {cartSize}
+                    </span>
+                  )}
                 </div>
                 <div>
                   <p className="font-light text-sm">Cart</p>
