@@ -19,7 +19,7 @@ export default function BrandCard(props:Props) {
         </figure>
         <div className='w-full space-y-2'>
             <p className='text-gray-400 font-normal'>{props.description}</p>
-            <button className='border border-green-400 text-green-400 bg-white rounded-md px-2 py-1' as-child>
+            <button className='border border-green-400 text-green-400 bg-white rounded-md px-2 py-1'>
                 <a href={props.link}>SHOP NOW</a>
             </button>
         </div>

@@ -1,9 +1,10 @@
 'use client'
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { BadgeCheck, BadgeX, ShoppingCart } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Category } from '@/types'
+import { CartContext } from '@/context'
 
 interface Props{
     id?: number,
@@ -25,6 +26,21 @@ interface Props{
 export default function ProductCard(props: Props) {
   const router = useRouter()
 
+  const [inCart,setInCart] = useState<boolean>(false)
+
+  const context = useContext(CartContext)
+  if (!context) throw new Error("Cart Context Not Found")
+
+  const {addToCart,removeFromCart,cartIds} = context
+
+  const cartIdList = JSON.parse(localStorage.getItem("Ids") || "[]")
+
+  const toggleCart = (id: number | undefined) => {
+    if (id == null) return
+    if (cartIds.includes(id)) removeFromCart(id)
+    else addToCart(id)
+  }
+
   const handleClick = () => {
     router.push(`/product_detail/${props.category?.slug}/${props.id}`)
     console.log("The Category of selected product: " , props.category)
@@ -33,7 +49,6 @@ export default function ProductCard(props: Props) {
 
   return (
     <div
-      onClick={handleClick}
       className='
         relative w-full bg-white p-4 rounded-md
         border border-transparent
@@ -42,6 +57,7 @@ export default function ProductCard(props: Props) {
         hover:-translate-y-1
         transition-all duration-300 ease-in-out
         grid grid-rows-[auto_1fr_auto_auto_auto_auto] gap-2
+        hover:cursor-pointer
       '
     >
       {/* BADGE */}
@@ -55,12 +71,24 @@ export default function ProductCard(props: Props) {
       )}
 
       {/* CART ICON */}
-      <span className='
-        absolute w-8 h-8 flex justify-center items-center 
-        bg-gray-200 top-1 right-1 rounded-full
-        cursor-pointer hover:bg-gray-300 transition
-      '>
-        <ShoppingCart size={16} />
+      <span
+        onClick={()=>toggleCart(props.id)}
+        className={`
+          absolute top-1 right-1
+          w-9 h-9 flex items-center justify-center
+          rounded-full cursor-pointer
+          transition-all duration-200
+          ${props.id != null && cartIds.includes(props.id)
+            ? 'bg-green-100 hover:bg-green-200'
+            : 'bg-gray-200 hover:bg-gray-300'}
+        `}
+      >
+        <ShoppingCart 
+          size={16} 
+          className={`transition-colors duration-200 ${
+          props.id != null && cartIds.includes(props.id) ? 'text-green-600' : 'text-gray-800'
+          }`} 
+        />
       </span>
 
       {/* IMAGE */}
@@ -68,7 +96,12 @@ export default function ProductCard(props: Props) {
         <img className='h-32 object-contain' src={props.image} alt={props.name} />
         <figcaption className='w-full text-center'>
           <span className='text-gray-400 text-xs'>({props.stock_left})</span>
-          <h1 className='text-sm md:text-base font-semibold'>{props.name}</h1>
+          <h1 
+            className='text-sm md:text-base font-semibold'
+            onClick={handleClick}
+          >
+            {props.name}
+            </h1>
         </figcaption>
       </figure>
 
