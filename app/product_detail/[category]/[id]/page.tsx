@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import NavBar from '@/components/NavBar'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Footer from '@/components/Footer'
@@ -29,8 +29,8 @@ export default function page() {
         <div className="w-full h-full p-12 bg-gray-200">
             <NavBar/>
             <Breadcrumbs
-              parent1='Product Page'
-              parent2='Mobile Detail'
+              parent1='Products Page'
+              parent2={product.name}
             />
             <PhoneProductPage product={product}/>
             <ProductDescripton/>

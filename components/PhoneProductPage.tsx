@@ -19,13 +19,39 @@ import {
 } from "lucide-react"
 
 import { Product } from "@/types"
+import { useState,useEffect } from "react"
 
-export default function PhoneProductPage({ product }: { product: Product }) {
+export default function PhoneProductPage({ product}: { product: Product}) {
 
+  const isSingleVariant = product.variants?.length === 1
   const firstVariant = product.variants?.[0]
 
   const price = Number(firstVariant?.price || 0)
   const stock = firstVariant?.stock || 0
+
+  const [quantity,setQuantity] = useState<number>(1)
+  const [selectedColor,setSelectedColor] = useState(firstVariant?.color)
+  const [selectedStorage,setSelectedStorage] = useState(firstVariant?.storage)
+  const [selectedRam,setSelectedRam] = useState(firstVariant?.ram)
+
+  const [selection,setSelection] = useState([{}])
+
+  useEffect(() => {
+    setSelection([
+      {
+        id: product.id,
+        color: selectedColor || firstVariant?.color,
+        ram: selectedRam || firstVariant?.ram,
+        storage: selectedStorage || firstVariant?.storage,
+        quantity: quantity
+      }
+    ])
+  }, [selectedColor, selectedRam, selectedStorage, quantity,product.id,firstVariant])
+
+  useEffect(() => {
+    console.log(selection)
+    localStorage.setItem("orders",JSON.stringify(selection))
+  }, [selection])
 
   const thumbnails = product.variants?.filter(v => v.image)
 
@@ -94,7 +120,17 @@ export default function PhoneProductPage({ product }: { product: Product }) {
               <div className="flex flex-col sm:flex-row flex-wrap gap-4">
                 {product.variants.map((v, i) => (
                   v.color && (
-                    <figure key={i} className="border rounded-md p-2 flex flex-col sm:flex-row items-center gap-2">
+                    <figure 
+                      key={i}
+                      onClick={()=>{
+                        if (!isSingleVariant) setSelectedColor(v.color)
+                        setSelectedColor(v.color)}} 
+                      className={`border rounded-md p-2 flex flex-col sm:flex-row items-center gap-2 cursor-pointer hover:bg-gray-100
+                        ${v.color === selectedColor
+                        ? 'border-3 border-green-500'
+                        : 'bg-white text-gray-700 border'
+                      }`}
+                    >
                       {v.image && <img src={v.image} alt="" />}
                       <figcaption>
                         {v.color} <span className="font-bold">${v.price}</span>
@@ -109,18 +145,64 @@ export default function PhoneProductPage({ product }: { product: Product }) {
           {/* MEMORY (STORAGE) */}
           {product.variants?.some(v => v.storage) && (
             <div className="space-y-2">
-              <h3 className="text-sm font-semibold">MEMORY SIZE</h3>
+              <h3 className="text-sm font-semibold">STORAGE SIZE</h3>
+              <div className="flex flex-wrap gap-2">
+                {product.variants.map((v, i) => {
+                  if (!v.storage) return null
+
+                  const storageValue = parseInt(v.storage)
+                  const displayStorage =
+                    storageValue > 1024
+                      ? `${storageValue / 1024} TB`
+                      : `${storageValue} GB`
+
+                  return (
+                    <Button
+                      key={i}
+                      variant="outline"
+                      onClick={() => {
+                        if (!isSingleVariant) setSelectedStorage(v.storage)
+                        setSelectedStorage(v.storage)}}
+                      className={`hover:bg-gray-100 cursor-pointer ${
+                        v.storage === selectedStorage
+                          ? 'border-3 border-green-500'
+                          : 'bg-white text-gray-700 border'
+                      }`}
+                    >
+                      {displayStorage}
+                    </Button>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* MEMORY (RAM) */}
+          {product.variants?.some(v => v.ram) && (
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold">RAM SIZE</h3>
               <div className="flex flex-wrap gap-2">
                 {product.variants.map((v, i) => (
-                  v.storage && (
-                    <Button key={i} variant="outline">
-                      {v.storage}GB
+                  v.ram && (
+                    <Button 
+                      key={i} 
+                      variant="outline"
+                      onClick={()=>{
+                        if (!isSingleVariant) setSelectedRam(v.ram)
+                        setSelectedRam(v.ram)}}
+                      className={`hover:bg-gray-100 cursor-pointer ${v.ram === selectedRam
+                        ? 'border-3 border-green-500'
+                        : 'bg-white text-gray-700 border'
+                      }`}
+                    >
+                      {v.ram} GB
                     </Button>
                   )
                 ))}
               </div>
             </div>
           )}
+
 
           <hr />
 
@@ -164,9 +246,9 @@ export default function PhoneProductPage({ product }: { product: Product }) {
             </div>
 
             <ButtonGroup>
-              <Button variant="outline"><Plus /></Button>
-              <Input value="1" readOnly className="w-10 bg-white text-center" />
-              <Button variant="outline"><Minus /></Button>
+              <Button variant="outline" onClick={()=>setQuantity(prev=>Math.max(1,prev - 1))}><Minus /></Button>
+              <Input value={quantity} min={1} max={stock} readOnly className="w-10 bg-white text-center" />
+              <Button variant="outline" onClick={()=>setQuantity(prev=>Math.min(stock,prev + 1))}><Plus /></Button>
             </ButtonGroup>
 
             <div className="space-y-2">
