@@ -6,4 +6,12 @@ export type CartContextType = {
     removeFromCart : (id:number | undefined) => void,
     cartIds:number[],
     setCartIds:React.Dispatch<React.SetStateAction<number[]>>
+}
+
+export type CartProduct = {
+    id:number,
+    color:string,
+    ram:string | null,
+    storage:string | null,
+    quantity:number,
 } 
