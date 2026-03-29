@@ -3,8 +3,13 @@ import { BadgeCheck, BadgeX, ShoppingCart, Plus, Minus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
 import { Input } from "@/components/ui/input"
+import { useContext } from 'react'
+import { CartContext } from '@/context'
+import { Category } from '@/types'
 
-interface Props { 
+interface Props {
+    id:number,
+    category: Category, 
     name:string, 
     image:string, 
     price?:number, 
@@ -16,16 +21,23 @@ interface Props {
     shipping_fee?:number, 
     free_gift?:boolean, 
     in_stock?:boolean | 'pre' ,
-    stock_left:number | null 
+    stock_left:number | null,
+    order_quantity?:number, 
 }
 
 export default function OrderCard(props: Props) {
+
+  const context = useContext(CartContext)
+    if (!context) throw new Error ('Cart Conntext Not Availble...')
+  
+  const {removeFromCart} = context
+
   return (
     <div className='relative w-full rounded-md border p-4 flex flex-col md:flex-row gap-4'>
 
       {/* BADGES */}
       <span className={`
-        ${props.discount || props.just_in ? 'absolute -top-2 -left-2 px-2 py-1 rounded-md text-white text-xs' : 'hidden'}
+        ${props.discount || props.just_in ? 'absolute top-2 left-2 px-2 py-1 rounded-md text-white text-xs' : 'hidden'}
         ${props.discount ? 'bg-green-400' : props.just_in ? 'bg-black' : ''}
       `}>
         {props.discount
@@ -33,8 +45,10 @@ export default function OrderCard(props: Props) {
           : props.just_in ? 'NEW' : null}
       </span>
 
-      <span className='absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full'>
-        <ShoppingCart size={18} />
+      <span 
+        className='absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-white rounded-full'
+      >
+        <BadgeX size={18} color='red' className='hover:cursor-pointer'/>
       </span>
 
       {/* IMAGE */}
@@ -64,7 +78,7 @@ export default function OrderCard(props: Props) {
         {/* QUANTITY */}
         <ButtonGroup>
           <Button variant="outline"><Plus /></Button>
-          <Input readOnly type='number' className='w-12 text-center' />
+          <Input readOnly type='number' value={props.order_quantity} className='w-12 flex justify-center items-center' />
           <Button variant="outline"><Minus /></Button>
         </ButtonGroup>
 

@@ -18,7 +18,7 @@ interface Props{
     free_shipping?: boolean,
     shipping_fee?: number,
     free_gift?: boolean,
-    in_stock?: boolean | 'pre',
+    in_stock?: boolean | 'pre',  //chore:implementing for pre-order
     stock_left: number | null,
     category?: Category
 }
@@ -26,14 +26,10 @@ interface Props{
 export default function ProductCard(props: Props) {
   const router = useRouter()
 
-  const [inCart,setInCart] = useState<boolean>(false)
-
   const context = useContext(CartContext)
   if (!context) throw new Error("Cart Context Not Found")
 
   const {addToCart,removeFromCart,cartIds} = context
-
-  const cartIdList = JSON.parse(localStorage.getItem("Ids") || "[]")
 
   const toggleCart = (id: number | undefined) => {
     if (id == null) return
@@ -92,13 +88,12 @@ export default function ProductCard(props: Props) {
       </span>
 
       {/* IMAGE */}
-      <figure className='flex flex-col items-center row-start-1'>
+      <figure className='flex flex-col items-center row-start-1' onClick={handleClick}>
         <img className='h-32 object-contain' src={props.image} alt={props.name} />
         <figcaption className='w-full text-center'>
           <span className='text-gray-400 text-xs'>({props.stock_left})</span>
           <h1 
             className='text-sm md:text-base font-semibold'
-            onClick={handleClick}
           >
             {props.name}
             </h1>
