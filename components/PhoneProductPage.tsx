@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "./ui/button-group"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "./ui/checkbox"
+import { Dialog,DialogContent,DialogHeader,DialogFooter,DialogTitle } from "./ui/dialog"
 import {
   Plus,
   Minus,
@@ -19,7 +20,9 @@ import {
 } from "lucide-react"
 
 import { Product } from "@/types"
-import { useState,useEffect } from "react"
+import { CartProduct } from "@/types/cart"
+import { CartContext } from "@/context"
+import { useState,useEffect,useContext } from "react"
 
 export default function PhoneProductPage({ product}: { product: Product}) {
 
@@ -29,15 +32,41 @@ export default function PhoneProductPage({ product}: { product: Product}) {
   const price = Number(firstVariant?.price || 0)
   const stock = firstVariant?.stock || 0
 
+  const [open,setOpen] = useState<boolean>(false)
+
   const [quantity,setQuantity] = useState<number>(1)
   const [selectedColor,setSelectedColor] = useState(firstVariant?.color)
   const [selectedStorage,setSelectedStorage] = useState(firstVariant?.storage)
   const [selectedRam,setSelectedRam] = useState(firstVariant?.ram)
 
-  const [selection,setSelection] = useState([{}])
+  const [selection,setSelection] = useState<CartProduct>()
+
+  const context = useContext(CartContext)
+  if (!context) throw new Error("Cart Context Not Found")
+  
+  const {addToCart} = context
+
+  const handleAddToCart = (id: number | undefined,product:CartProduct|undefined) => {
+    if(!product) return
+
+    if (id == null) return
+    addToCart(id)
+
+    const cart:CartProduct[] = JSON.parse(localStorage.getItem("orders") || "[]")
+    const index:number = cart.findIndex((p:CartProduct)=>p.id === id)
+
+    if (index !== -1){
+      cart[index] = product
+    }else{
+      cart.push(product)
+    }
+    
+    localStorage.setItem("orders",JSON.stringify(cart))
+    setOpen(true)
+  }
 
   useEffect(() => {
-    setSelection([
+    setSelection(
       {
         id: product.id,
         color: selectedColor || firstVariant?.color,
@@ -45,18 +74,32 @@ export default function PhoneProductPage({ product}: { product: Product}) {
         storage: selectedStorage || firstVariant?.storage,
         quantity: quantity
       }
-    ])
+    )
   }, [selectedColor, selectedRam, selectedStorage, quantity,product.id,firstVariant])
+
+  //const handleAddToCart = ()=>localStorage.setItem("orders",JSON.stringify(selection))  #chore:use Add To Cart button to set-items
 
   useEffect(() => {
     console.log(selection)
-    localStorage.setItem("orders",JSON.stringify(selection))
   }, [selection])
 
   const thumbnails = product.variants?.filter(v => v.image)
 
   return (
     <div className="grid grid-rows-[auto_auto] mt-4 gap-4">
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogHeader></DialogHeader>
+        <DialogContent>
+          <DialogTitle>TechMart Cart</DialogTitle>
+          <p>
+            Item:<span className="font-normal text-[#1ABA1A]">{product.name}</span> was successfully added to cart
+          </p>
+          <DialogFooter>Add more items to your cart and proceed to checkout</DialogFooter>
+          <Button variant={"outline"} onClick={()=>setOpen(false)}>Close</Button>
+        </DialogContent>
+        
+      </Dialog>
 
       <section className="grid grid-cols-1 lg:grid-cols-[1.2fr_1.5fr_1fr] gap-6 bg-white p-4 lg:p-6 rounded-xl">
 
@@ -203,7 +246,6 @@ export default function PhoneProductPage({ product}: { product: Product}) {
             </div>
           )}
 
-
           <hr />
 
           {/* PROMO (fallback static) */}
@@ -252,7 +294,7 @@ export default function PhoneProductPage({ product}: { product: Product}) {
             </ButtonGroup>
 
             <div className="space-y-2">
-              <Button className="w-full bg-green-600">Add to Cart</Button>
+              <Button className="w-full bg-green-600" onClick={()=>handleAddToCart(product.id,selection)}>Add to Cart</Button>
               <Button variant="outline" className="w-full bg-orange-400">
                 Buy with PayPal
               </Button>

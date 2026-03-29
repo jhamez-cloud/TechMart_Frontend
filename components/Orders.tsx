@@ -1,8 +1,35 @@
-import React from 'react'
+'use client'
+import React, { useContext } from 'react'
 import OrderCard from './ui/OrderCard'
 import { Button } from './ui/button'
+import useSWR from 'swr'
+import ApiError from './ApiError'
+import ApiLoading from './ApiLoading'
+
+import { Product } from '@/types'
+import { CartProduct } from '@/types/cart'
+import { CartContext } from '@/context'
 
 export default function Orders() {
+
+  const context = useContext(CartContext)
+  if (!context) throw new Error ('Cart Conntext Not Availble...')
+
+  const {cartIds} = context
+  const getids = cartIds.join(',')
+
+  const orders:CartProduct[] = JSON.parse(localStorage.getItem("orders") || "[]")
+  const orderIds = orders.map((order)=>order.id).join(',')
+
+  const Django_Url = process.env.NEXT_PUBLIC_DJANGO_URL;
+
+  const { data: products, error: error } = useSWR<Product[]>(
+    `${Django_Url}/api/v1/products/?id_in=${orderIds}`,
+  );
+
+  if (error) return <ApiError />;
+  if (!products) return <ApiLoading />;
+
   return (
     <div className='w-full min-h-120 rounded-md bg-white px-4 md:px-10 py-6 md:py-10 mt-4 flex flex-col gap-8'>
 
@@ -11,44 +38,40 @@ export default function Orders() {
 
         {/* ORDER LIST */}
         <div className='w-full lg:col-span-2 space-y-4 order-2 lg:order-1'>
-          <OrderCard 
-            name='GROK Smartphone 128GB, OLED Retina' 
-            shipping_fee={3.98} 
-            in_stock 
-            discount
-            old_price={850}
-            new_price={579} 
-            stock_left={140} 
-            image='/images/grok_smartphone.png'
-          />
-          <OrderCard 
-            name='Samsung s9 Plus, 128GB + 4GB RAM,GPS' 
-            free_shipping
-            free_gift 
-            in_stock 
-            price={659} 
-            stock_left={140} 
-            image='/images/samsung_s9_plus.png'
-          />
-          <OrderCard 
-            name='Pineapple MacBook Pro 2022 M1 / 512GB' 
-            shipping_fee={3.98} 
-            in_stock 
-            price={579}
-            just_in 
-            stock_left={140} 
-            image='/images/macbook_pineapple.png'
-          />
-          <OrderCard 
+          {products.map((product) => {
+            const orderlist = orders.find((o)=>o.id === product.id) 
+            return <OrderCard
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              image={product.image}
+              discount={product.discount}
+              old_price={(100 * Number(product.variants?.[0]?.price))/product.discount_percentage}
+              new_price={Number(product.variants?.[0]?.price)}
+              price={Number(product.variants?.[0]?.price)}
+              stock_left={product.variants?.[0]?.stock || 0}
+              in_stock={product.variants?.[0]?.stock > 0}
+              category={product.category}
+              free_shipping={product.free_shipping}
+              free_gift={product.free_gift}
+              shipping_fee={product.shipping_fee}
+              just_in={product.just_in}
+              order_quantity={orderlist?.quantity}
+            />
+          })}
+          {/*<OrderCard 
             name='BOSO 2 Wireless On Ear Headphone' 
             free_gift 
             free_shipping 
             in_stock 
             just_in
+            discount
+            old_price={850}
+            new_price={579}
             price={350} 
             stock_left={152} 
             image='/images/boso_headphone.png'
-          />
+          />*/}
         </div>
 
         {/* ORDER SUMMARY → TOP ON MOBILE */}
