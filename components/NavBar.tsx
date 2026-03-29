@@ -30,16 +30,17 @@ import {
   InputGroupAddon
 } from "@/components/ui/input-group"
 
+import { CartProduct } from '@/types/cart'
+
 export default function NavBar() {
 
   const [open, setOpen] = useState(false)
   const [pagesOpen, setPagesOpen] = useState(false)
   const [productsOpen, setProductsOpen] = useState(false)
 
-  const context = useContext(CartContext)
-  if (!context) throw new Error("Cart Context Not Found")
+  const orders:CartProduct[] = JSON.parse(localStorage.getItem("orders") || "[]")
 
-  const {cartSize} = context
+  const cartSize = orders.length
 
   return (
     <div className="w-full h-auto">
@@ -122,8 +123,12 @@ export default function NavBar() {
             <li>
               <div className="flex space-x-2 items-center">
                 <div className="relative">
-                  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition cursor-pointer">
-                    <ShoppingCart size={18} className="text-gray-700" />
+                  <div 
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition cursor-pointer"
+                  >
+                    <NavLink href='/pages/cart'>
+                      <ShoppingCart size={18} className="text-gray-700" />
+                    </NavLink>
                   </div>
 
                   {cartSize > 0 && (
@@ -303,7 +308,9 @@ export default function NavBar() {
               <div className="flex space-x-2 items-center">
                 <div className="relative">
                   <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition cursor-pointer">
-                    <ShoppingCart size={18} className="text-gray-700" />
+                    <NavLink href='/pages/cart'>
+                      <ShoppingCart size={18} className="text-gray-700" />
+                    </NavLink>
                   </div>
 
                   {cartSize > 0 && (
