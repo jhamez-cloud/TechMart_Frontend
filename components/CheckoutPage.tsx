@@ -13,8 +13,35 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { InputGroup, InputGroupInput } from "@/components/ui/input-group"
+import ApiError from "./ApiError"
+import ApiLoading from "./ApiLoading"
+import useSWR from "swr"
+import { Product } from "@/types"
+import { CartProduct } from "@/types/cart"
+import CheckoutCard from "./ui/CheckoutCard"
+import { useEffect, useState } from "react"
 
 export default function CheckoutPage() {
+
+  const [orders, setOrders] = useState<CartProduct[]>([])
+  const [orderIds, setOrderIds] = useState<string>("")
+
+  useEffect(() => {
+    const data: CartProduct[] = JSON.parse(localStorage.getItem("orders") || "[]")
+    
+    setOrders(data)
+    setOrderIds(data.map(order => order.id).join(','))
+  }, [])
+
+  const Django_Url = process.env.NEXT_PUBLIC_DJANGO_URL;
+
+  const { data: products, error: error } = useSWR<Product[]>(
+    `${Django_Url}/api/v1/products/?id_in=${orderIds}`,
+  );
+  
+  if (error) return <ApiError />;
+  if (!products) return <ApiLoading />;
+
   return (
     <div className="w-full min-h-120 rounded-md mt-4 bg-gray-100 p-4 md:p-10 flex justify-center">
       <div className="w-full max-w-7xl flex flex-col gap-6">
@@ -48,21 +75,23 @@ export default function CheckoutPage() {
 
             <h2 className="font-semibold">Your Order</h2>
 
-            <div className="bg-gray-100 rounded-xl p-6 space-y-4">
+            <div className="bg-gray-100 rounded-xl p-6 space-y-6">
               <div className="flex justify-between text-sm font-semibold">
                 <span>PRODUCT(S)</span>
                 <span>SUB TOTAL</span>
               </div>
 
-              <div className="flex justify-between text-sm">
-                <div className="flex gap-3 items-center">
-                  <div className="w-10 h-10 bg-gray-300 rounded"/>
-                  <div>
-                    <p>Pineapple Macbook Pro 2022</p>
-                    <p className="text-xs text-gray-500">x 3</p>
-                  </div>
-                </div>
-                <span>$1,737.00</span>
+              <div className="flex flex-col gap-4 justify-between text-sm">
+                {products.map((product) => {
+                  const orderlist = orders.find((o)=>o.id === product.id) 
+                  return <CheckoutCard
+                    key={orderlist?.id}
+                    name={product.name}
+                    image={product.image}
+                    price={1234}
+                    quantity={orderlist?.quantity}
+                  />
+                })}
               </div>
 
               <div className="flex justify-between text-sm text-red-500">
