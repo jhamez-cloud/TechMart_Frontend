@@ -1,17 +1,17 @@
 import React from "react"
 
 export type CartContextType = {
-    cartSize : number,
-    addToCart : (id:number | undefined) => void,
-    removeFromCart : (id:number | undefined) => void,
-    cartIds:number[],
-    setCartIds:React.Dispatch<React.SetStateAction<number[]>>
+  orders: CartProduct[],
+  setOrders: React.Dispatch<React.SetStateAction<CartProduct[]>>,
+  cartSize: number,
+  addToCart: (product: CartProduct | undefined) => void,
+  removeFromCart: (id: number | undefined) => void
 }
 
 export type CartProduct = {
-    id:number,
-    color:string,
-    ram:string | null,
-    storage:string | null,
-    quantity:number,
+    id?:number,
+    color?:string,
+    ram?:string | null,
+    storage?:string | null,
+    quantity?:number,
 } 

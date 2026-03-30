@@ -1,8 +1,9 @@
 'use client'
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { SWRConfig } from 'swr'
 import { Product } from '@/types'
 import { CartContext } from '@/context'
+import { CartProduct } from '@/types/cart'
 
 export const ApiProviders = ({children}:{children:React.ReactNode}) => {
 
@@ -28,34 +29,50 @@ export const ApiProviders = ({children}:{children:React.ReactNode}) => {
 
 export const CartProviders = ({children}:{children:React.ReactNode}) => {
 
-  const [cartIds, setCartIds] = useState<number[]>(() => {
+  const [orders, setOrders] = useState<CartProduct[]>([])
+
+  useEffect(() => {
     try {
-      return JSON.parse(localStorage.getItem('Ids') || '[]')
+      const data = JSON.parse(localStorage.getItem("orders") || "[]")
+      setOrders(data)
     } catch {
-      return []
+      setOrders([])
     }
-  })
+  }, [])
 
-  const cartSize = cartIds.length
+  const addToCart = (product: CartProduct | undefined) => {
+    if (!product) return
 
-  const addToCart = (id: number | undefined) => {
-    if (id == null || cartIds.includes(id)) return // prevent undefined or duplicates
+    setOrders((prev) => {
+      const index = prev.findIndex(p => p.id === product.id && p.color === product.color)
 
-    const newCart = [...cartIds, id]
-    setCartIds(newCart)
-    localStorage.setItem('Ids', JSON.stringify(newCart))
+      let updated
+
+      if (index !== -1) {
+        updated = [...prev]
+        updated[index].quantity! += product.quantity!
+      } else {
+        updated = [...prev, product]
+      }
+
+      localStorage.setItem("orders", JSON.stringify(updated))
+      return updated
+    })
   }
 
   const removeFromCart = (id: number | undefined) => {
     if (id == null) return
 
-    const newCart = cartIds.filter(cartId => cartId !== id)
-    setCartIds(newCart)
-    localStorage.setItem('Ids', JSON.stringify(newCart))
+    const updated = orders.filter(item => item.id !== id)
+
+    setOrders(updated)
+    localStorage.setItem("orders", JSON.stringify(updated))
   }
 
+  const cartSize = orders.length
+
   return(
-    <CartContext.Provider value={{cartIds,setCartIds,cartSize,addToCart,removeFromCart}}>
+    <CartContext.Provider value={{orders, setOrders, cartSize, addToCart, removeFromCart}}>
       {children}
     </CartContext.Provider>
   )
