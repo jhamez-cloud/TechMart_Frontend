@@ -64,9 +64,9 @@ const LaptopShopFilter = () => {
 
       {/* ================= SIDEBAR ================= */}
       <div className={`
-        fixed lg:static top-0 left-0 h-full w-[85%] max-w-[320px] z-50
+        fixed lg:static top-0 left-0 h-full w-[85%] max-w-[320px] bg-white z-50
         transform ${showFilters ? 'translate-x-0' : '-translate-x-full'}
-        transition duration-300 lg:translate-x-0 overflow-y-auto
+        transition duration-300 lg:translate-x-0 overflow-y-auto rounded-2xl
       `}>
 
         {/* CLOSE BTN */}
@@ -78,7 +78,7 @@ const LaptopShopFilter = () => {
         </div>
 
         {/* CATEGORY SIDEBAR */}
-        <aside className="bg-white rounded-2xl mb-4 p-6 shadow-sm">
+        <aside className="bg-white space-y-8 p-6 ">
           <h2 className="text-lg font-bold mb-4">CATEGORIES</h2>
 
           <button className="w-full text-left border rounded-lg px-4 py-2 text-sm mb-6">
@@ -101,7 +101,7 @@ const LaptopShopFilter = () => {
         </aside>
 
         {/* FILTER SIDEBAR */}
-        <aside className="bg-white rounded-2xl p-6 shadow-sm space-y-8 mt-4 lg:mt-0">
+        <aside className="bg-white p-6 space-y-8 mt-4 lg:mt-0">
           {/* KEEP ALL FILTERS SAME */}
           {/* Active Filters */}
           <div className="flex justify-between items-center">
@@ -305,7 +305,9 @@ const LaptopShopFilter = () => {
                   free_gift={product.free_gift}
                   shipping_fee={product.shipping_fee}
                   just_in={product.just_in}
-
+                  discount={product.discount}
+                  old_price={Math.floor(Number(product.variants?.[0]?.price)/(1 - (product.discount_percentage/100)))}
+                  new_price={Number(product.variants?.[0]?.price)}
                 />
               ))}
             </ShopList>
