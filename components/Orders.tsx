@@ -4,22 +4,21 @@ import OrderCard from './ui/OrderCard'
 import { Button } from './ui/button'
 import useSWR from 'swr'
 import ApiError from './ApiError'
-import ApiLoading from './ApiLoading'
-
 import { Product } from '@/types'
 import { CartProduct } from '@/types/cart'
 import { CartContext } from '@/context'
+import { useState,useEffect } from 'react'
+import ApiLoading from './ApiLoading'
+import NoProduct from './NoProduct'
 
 export default function Orders() {
 
   const context = useContext(CartContext)
-  if (!context) throw new Error ('Cart Conntext Not Availble...')
+  if (!context) throw new Error('Cart Context Not Available')
 
-  const {cartIds} = context
-  const getids = cartIds.join(',')
+  const { orders, removeFromCart } = context
 
-  const orders:CartProduct[] = JSON.parse(localStorage.getItem("orders") || "[]")
-  const orderIds = orders.map((order)=>order.id).join(',')
+  const orderIds = orders.map((o)=>o.id).join(',')
 
   const Django_Url = process.env.NEXT_PUBLIC_DJANGO_URL;
 
@@ -38,8 +37,10 @@ export default function Orders() {
 
         {/* ORDER LIST */}
         <div className='w-full lg:col-span-2 space-y-4 order-2 lg:order-1'>
+          {!orders.length && <NoProduct />}
           {products.map((product) => {
-            const orderlist = orders.find((o)=>o.id === product.id) 
+            const orderlist = orders.find((o)=>o.id === product.id)
+            if (!orderlist) return null
             return <OrderCard
               key={product.id}
               id={product.id}
@@ -57,6 +58,7 @@ export default function Orders() {
               shipping_fee={product.shipping_fee}
               just_in={product.just_in}
               order_quantity={orderlist?.quantity}
+              onRemove={() => removeFromCart(product.id)}
             />
           })}
           {/*<OrderCard 
@@ -103,7 +105,7 @@ export default function Orders() {
             </div>
 
             <Button className='w-full bg-[#1A1]'>
-              CHECKOUT
+              <a href="/pages/checkout">CHECKOUT</a>
             </Button>
 
           </div>

@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import { BadgeCheck, BadgeX, ShoppingCart, Plus, Minus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
@@ -6,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { useContext } from 'react'
 import { CartContext } from '@/context'
 import { Category } from '@/types'
+import { CartProduct } from '@/types/cart'
 
 interface Props {
     id:number,
@@ -22,15 +24,21 @@ interface Props {
     free_gift?:boolean, 
     in_stock?:boolean | 'pre' ,
     stock_left:number | null,
-    order_quantity?:number, 
+    order_quantity?:number,
+    onRemove: () => void, 
 }
 
 export default function OrderCard(props: Props) {
 
   const context = useContext(CartContext)
-    if (!context) throw new Error ('Cart Conntext Not Availble...')
+  if (!context) throw new Error('Cart Context Not Available')
+
+  const { orders, removeFromCart } = context
   
-  const {removeFromCart} = context
+  const handleRemoveFromCart = (id: number | undefined) => {
+    if (id == null) return
+    removeFromCart(id)
+  }
 
   return (
     <div className='relative w-full rounded-md border p-4 flex flex-col md:flex-row gap-4'>
@@ -48,7 +56,7 @@ export default function OrderCard(props: Props) {
       <span 
         className='absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-white rounded-full'
       >
-        <BadgeX size={18} color='red' className='hover:cursor-pointer'/>
+        <BadgeX size={18} color='red' className='hover:cursor-pointer' onClick={props.onRemove}/>
       </span>
 
       {/* IMAGE */}

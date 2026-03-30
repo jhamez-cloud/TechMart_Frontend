@@ -46,22 +46,10 @@ export default function PhoneProductPage({ product}: { product: Product}) {
   
   const {addToCart} = context
 
-  const handleAddToCart = (id: number | undefined,product:CartProduct|undefined) => {
-    if(!product) return
+  const handleAddToCart = () => {
+    if (!selection) return
 
-    if (id == null) return
-    addToCart(id)
-
-    const cart:CartProduct[] = JSON.parse(localStorage.getItem("orders") || "[]")
-    const index:number = cart.findIndex((p:CartProduct)=>p.id === id)
-
-    if (index !== -1){
-      cart[index] = product
-    }else{
-      cart.push(product)
-    }
-    
-    localStorage.setItem("orders",JSON.stringify(cart))
+    addToCart(selection)
     setOpen(true)
   }
 
@@ -294,7 +282,7 @@ export default function PhoneProductPage({ product}: { product: Product}) {
             </ButtonGroup>
 
             <div className="space-y-2">
-              <Button className="w-full bg-green-600" onClick={()=>handleAddToCart(product.id,selection)}>Add to Cart</Button>
+              <Button className="w-full bg-green-600" onClick={()=>handleAddToCart()}>Add to Cart</Button>
               <Button variant="outline" className="w-full bg-orange-400">
                 Buy with PayPal
               </Button>

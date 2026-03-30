@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 
 import { Category } from '@/types'
 import { CartContext } from '@/context'
+import { CartProduct } from '@/types/cart'
 
 interface Props{
     id?: number,
@@ -29,12 +30,21 @@ export default function ProductCard(props: Props) {
   const context = useContext(CartContext)
   if (!context) throw new Error("Cart Context Not Found")
 
-  const {addToCart,removeFromCart,cartIds} = context
+  const { addToCart, removeFromCart, orders } = context
 
-  const toggleCart = (id: number | undefined) => {
-    if (id == null) return
-    if (cartIds.includes(id)) removeFromCart(id)
-    else addToCart(id)
+  const isInCart = (id: number | undefined) => {
+    if (id == null) return false
+    return orders.some(item => item.id === id)
+  }
+
+  const toggleCart = (product: CartProduct | undefined) => {
+    if (!product || product.id == null) return
+
+    if (isInCart(product.id)) {
+      removeFromCart(product.id)
+    } else {
+      addToCart(product)
+    }
   }
 
   const handleClick = () => {
@@ -68,13 +78,13 @@ export default function ProductCard(props: Props) {
 
       {/* CART ICON */}
       <span
-        onClick={()=>toggleCart(props.id)}
+        //onClick={()=>toggleCart({id: props.id!,quantity: 1})}
         className={`
           absolute top-1 right-1
           w-9 h-9 flex items-center justify-center
           rounded-full cursor-pointer
           transition-all duration-200
-          ${props.id != null && cartIds.includes(props.id)
+          ${isInCart(props.id)
             ? 'bg-green-100 hover:bg-green-200'
             : 'bg-gray-200 hover:bg-gray-300'}
         `}
@@ -82,7 +92,7 @@ export default function ProductCard(props: Props) {
         <ShoppingCart 
           size={16} 
           className={`transition-colors duration-200 ${
-          props.id != null && cartIds.includes(props.id) ? 'text-green-600' : 'text-gray-800'
+          isInCart(props.id) ? 'text-green-600' : 'text-gray-800'
           }`} 
         />
       </span>
