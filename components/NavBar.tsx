@@ -1,5 +1,5 @@
 'use client'
-import React, { useState,useContext } from 'react'
+import React, { useState,useContext, useEffect } from 'react'
 import { CartContext } from '@/context'
 import NavLink from './ui/NavLink'
 import {
@@ -37,11 +37,13 @@ export default function NavBar() {
   const [open, setOpen] = useState(false)
   const [pagesOpen, setPagesOpen] = useState(false)
   const [productsOpen, setProductsOpen] = useState(false)
+  const context = useContext(CartContext)
 
-  const orders:CartProduct[] = JSON.parse(localStorage.getItem("orders") || "[]")
+  if (!context) throw new Error("Cart Context Not Found")
+  const { orders } = context
 
   const cartSize = orders.length
-
+  
   return (
     <div className="w-full h-auto">
 
