@@ -268,7 +268,8 @@ const ShopFilter = () => {
             {paginatedProducts.map(product => (
               <ProductCard
                 key={product.id}
-                id={product.id}
+                id={product.variants?.[0]?.id} // variant id
+                product_id={product.id}
                 name={product.name}
                 image={product.image}
                 price={Number(product.variants?.[0]?.price)}
