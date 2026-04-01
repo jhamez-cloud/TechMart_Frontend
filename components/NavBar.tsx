@@ -1,7 +1,7 @@
-'use client'
-import React, { useState,useContext, useEffect } from 'react'
-import { CartContext } from '@/context'
-import NavLink from './ui/NavLink'
+"use client";
+import React, { useState, useContext, useEffect } from "react";
+import { CartContext } from "@/context/context";
+import NavLink from "./ui/NavLink";
 import {
   Search,
   Heart,
@@ -11,8 +11,8 @@ import {
   BadgeInfo,
   Menu,
   X,
-  ChevronDown
-} from 'lucide-react'
+  ChevronDown,
+} from "lucide-react";
 
 import {
   Select,
@@ -22,34 +22,33 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 import {
   InputGroup,
   InputGroupInput,
-  InputGroupAddon
-} from "@/components/ui/input-group"
+  InputGroupAddon,
+} from "@/components/ui/input-group";
 
-import { CartProduct } from '@/types/cart'
+import { CartProduct } from "@/types/cart";
 
 export default function NavBar() {
+  const [open, setOpen] = useState(false);
+  const [pagesOpen, setPagesOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(false);
+  const context = useContext(CartContext);
 
-  const [open, setOpen] = useState(false)
-  const [pagesOpen, setPagesOpen] = useState(false)
-  const [productsOpen, setProductsOpen] = useState(false)
-  const context = useContext(CartContext)
+  if (!context) throw new Error("Cart Context Not Found");
+  const { orders } = context;
 
-  if (!context) throw new Error("Cart Context Not Found")
-  const { orders } = context
+  const cartSize = orders.length;
 
-  const cartSize = orders.length
-  
   return (
     <div className="w-full h-auto">
-
       {/* MOBILE SIDEBAR */}
-      <div className={`fixed top-0 left-0 h-full w-72 bg-white z-50 shadow-xl transform transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"}`}>
-
+      <div
+        className={`fixed top-0 left-0 h-full w-72 bg-white z-50 shadow-xl transform transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"}`}
+      >
         {/* CLOSE BUTTON */}
         <div className="flex justify-between items-center p-4 border-b">
           <h1 className="font-bold text-lg">Menu</h1>
@@ -58,7 +57,6 @@ export default function NavBar() {
 
         {/* NAV ITEMS */}
         <ul className="flex flex-col p-4 space-y-4 font-semibold">
-
           <li>
             <NavLink href="/">HOME</NavLink>
           </li>
@@ -74,12 +72,24 @@ export default function NavBar() {
 
             {pagesOpen && (
               <ul className="pl-4 mt-2 space-y-2 font-normal">
-                <li><NavLink href="/pages/login">Login</NavLink></li>
-                <li><NavLink href="/pages/register">Register</NavLink></li>
-                <li><NavLink href="/pages/cart">Cart</NavLink></li>
-                <li><NavLink href="/pages/profile">Profile</NavLink></li>
-                <li><NavLink href="/pages/checkout">Checkout</NavLink></li>
-                <li><NavLink href="/pages/about">About</NavLink></li>
+                <li>
+                  <NavLink href="/pages/login">Login</NavLink>
+                </li>
+                <li>
+                  <NavLink href="/pages/register">Register</NavLink>
+                </li>
+                <li>
+                  <NavLink href="/pages/cart">Cart</NavLink>
+                </li>
+                <li>
+                  <NavLink href="/pages/profile">Profile</NavLink>
+                </li>
+                <li>
+                  <NavLink href="/pages/checkout">Checkout</NavLink>
+                </li>
+                <li>
+                  <NavLink href="/pages/about">About</NavLink>
+                </li>
               </ul>
             )}
           </li>
@@ -95,9 +105,15 @@ export default function NavBar() {
 
             {productsOpen && (
               <ul className="pl-4 mt-2 space-y-2 font-normal">
-                <li><NavLink href="/products/laptops">Laptops</NavLink></li>
-                <li><NavLink href="/products/phones">Phones</NavLink></li>
-                <li><NavLink href="/products/accessories">Accessories</NavLink></li>
+                <li>
+                  <NavLink href="/products/laptops">Laptops</NavLink>
+                </li>
+                <li>
+                  <NavLink href="/products/phones">Phones</NavLink>
+                </li>
+                <li>
+                  <NavLink href="/products/accessories">Accessories</NavLink>
+                </li>
               </ul>
             )}
           </li>
@@ -105,16 +121,16 @@ export default function NavBar() {
           <li>
             <NavLink href="/contact">CONTACT</NavLink>
           </li>
-
         </ul>
 
         {/* 🔥 NEW: USER / CART SECTION (MOBILE) */}
         <div className="border-t p-4 space-y-4">
-
           {/* ICONS */}
           <ul className="flex items-center space-x-3">
             <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-              <a href="/pages/profile" title='Account Page'><CircleUser size={20}/></a>
+              <a href="/pages/profile" title="Account Page">
+                <CircleUser size={20} />
+              </a>
             </li>
             <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
               <Heart size={16} />
@@ -125,10 +141,8 @@ export default function NavBar() {
             <li>
               <div className="flex space-x-2 items-center">
                 <div className="relative">
-                  <div 
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition cursor-pointer"
-                  >
-                    <NavLink href='/pages/cart'>
+                  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition cursor-pointer">
+                    <NavLink href="/pages/cart">
                       <ShoppingCart size={18} className="text-gray-700" />
                     </NavLink>
                   </div>
@@ -165,8 +179,6 @@ export default function NavBar() {
           </div>
 
           {/* CART */}
-          
-
         </div>
       </div>
 
@@ -180,12 +192,9 @@ export default function NavBar() {
 
       {/* TOP NAV */}
       <div className="w-full h-40">
-
         <div className="h-2/3 w-full rounded-md bg-white px-4 py-2 flex flex-col">
-
           {/* TOP BAR */}
           <div className="w-full h-1/4 hidden md:flex justify-between text-xs">
-
             <div className="flex space-x-4 items-center">
               <div className="px-2 py-1 rounded-sm bg-gray-200">
                 HotLine 24/7
@@ -195,8 +204,12 @@ export default function NavBar() {
 
             <div className="flex space-x-8 text-sm">
               <div className="space-x-4">
-                <a href="" className="hover:text-green-700">Sell On TechMart</a>
-                <a href="" className="hover:text-green-700">Order Tracking</a>
+                <a href="" className="hover:text-green-700">
+                  Sell On TechMart
+                </a>
+                <a href="" className="hover:text-green-700">
+                  Order Tracking
+                </a>
               </div>
 
               <div className="space-x-2">
@@ -213,15 +226,12 @@ export default function NavBar() {
                 </select>
               </div>
             </div>
-
           </div>
 
           {/* MAIN NAV */}
           <div className="w-full h-3/4 flex items-center justify-between">
-
             {/* LEFT (LOGO + MENU BTN) */}
             <div className="flex items-center space-x-4">
-
               {/* MOBILE MENU BUTTON */}
               <Menu
                 className="md:hidden cursor-pointer"
@@ -236,7 +246,9 @@ export default function NavBar() {
 
                 <div>
                   <h1 className="font-bold text-xl">TechMart</h1>
-                  <p className="text-sm font-light hidden sm:block">The Best Tech Store</p>
+                  <p className="text-sm font-light hidden sm:block">
+                    The Best Tech Store
+                  </p>
                 </div>
               </div>
             </div>
@@ -244,7 +256,6 @@ export default function NavBar() {
             {/* DESKTOP NAV */}
             <nav className="hidden md:block w-2/3">
               <ul className="w-full ml-16 flex space-x-6 items-center">
-
                 <li className="font-semibold">
                   <NavLink href="/">HOME</NavLink>
                 </li>
@@ -254,37 +265,56 @@ export default function NavBar() {
                   <NavLink href="/pages">PAGES</NavLink>
 
                   <ul className="absolute z-10 top-6 left-0 hidden group-hover:block bg-white shadow-xl shadow-black rounded-md w-40">
-                    <li className="p-2 hover:bg-gray-100"><NavLink href="/pages/login">Login</NavLink></li>
+                    <li className="p-2 hover:bg-gray-100">
+                      <NavLink href="/pages/login">Login</NavLink>
+                    </li>
                     <hr />
-                    <li className="p-2 hover:bg-gray-100"><NavLink href="/pages/register">Register</NavLink></li>
+                    <li className="p-2 hover:bg-gray-100">
+                      <NavLink href="/pages/register">Register</NavLink>
+                    </li>
                     <hr />
-                    <li className="p-2 hover:bg-gray-100"><NavLink href="/pages/cart">Cart</NavLink></li>
+                    <li className="p-2 hover:bg-gray-100">
+                      <NavLink href="/pages/cart">Cart</NavLink>
+                    </li>
                     <hr />
-                    <li className="p-2 hover:bg-gray-100"><NavLink href="/pages/profile">Profile</NavLink></li>
+                    <li className="p-2 hover:bg-gray-100">
+                      <NavLink href="/pages/profile">Profile</NavLink>
+                    </li>
                     <hr />
-                    <li className="p-2 hover:bg-gray-100"><NavLink href="/pages/checkout">Checkout</NavLink></li>
+                    <li className="p-2 hover:bg-gray-100">
+                      <NavLink href="/pages/checkout">Checkout</NavLink>
+                    </li>
                     <hr />
-                    <li className="p-2 hover:bg-gray-100"><NavLink href="/pages/about">About</NavLink></li>
+                    <li className="p-2 hover:bg-gray-100">
+                      <NavLink href="/pages/about">About</NavLink>
+                    </li>
                   </ul>
                 </li>
 
                 {/* PRODUCTS */}
                 <li className="relative group font-semibold cursor-pointer">
-                  <NavLink href='/products'>PRODUCTS</NavLink>
+                  <NavLink href="/products">PRODUCTS</NavLink>
 
                   <ul className="absolute top-6 left-0 hidden group-hover:block bg-white shadow-xl shadow-black rounded-md w-40">
-                    <li className="p-2 hover:bg-gray-100"><NavLink href="/products/laptops">Laptops</NavLink></li>
+                    <li className="p-2 hover:bg-gray-100">
+                      <NavLink href="/products/laptops">Laptops</NavLink>
+                    </li>
                     <hr />
-                    <li className="p-2 hover:bg-gray-100"><NavLink href="/products/phones">Phones</NavLink></li>
+                    <li className="p-2 hover:bg-gray-100">
+                      <NavLink href="/products/phones">Phones</NavLink>
+                    </li>
                     <hr />
-                    <li className="p-2 hover:bg-gray-100"><NavLink href="/products/accessories">Accessories</NavLink></li>
+                    <li className="p-2 hover:bg-gray-100">
+                      <NavLink href="/products/accessories">
+                        Accessories
+                      </NavLink>
+                    </li>
                   </ul>
                 </li>
 
                 <li className="font-semibold">
                   <NavLink href="/contact">CONTACT</NavLink>
                 </li>
-
               </ul>
             </nav>
 
@@ -292,25 +322,33 @@ export default function NavBar() {
             <div className="hidden md:flex w-1/3 items-center justify-between">
               <ul className="flex space-x-3">
                 <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                  <a href="/pages/profile" title='Account Page'><CircleUser size={20} /></a>
+                  <a href="/pages/profile" title="Account Page">
+                    <CircleUser size={20} />
+                  </a>
                 </li>
                 <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                  <a href="/pages/checkout" title='WishList'><Heart size={16} /></a>
+                  <a href="/pages/checkout" title="WishList">
+                    <Heart size={16} />
+                  </a>
                 </li>
                 <li className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                  <a href="/pages/about" title='About Page'><BadgeInfo size={20} /></a>
+                  <a href="/pages/about" title="About Page">
+                    <BadgeInfo size={20} />
+                  </a>
                 </li>
               </ul>
 
               <div>
                 <p className="font-light text-sm">Welcome</p>
-                <p className="text-sm"><a href="">Login</a> | <a href="">Register</a></p>
+                <p className="text-sm">
+                  <a href="">Login</a> | <a href="">Register</a>
+                </p>
               </div>
 
               <div className="flex space-x-2 items-center">
                 <div className="relative">
                   <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition cursor-pointer">
-                    <NavLink href='/pages/cart'>
+                    <NavLink href="/pages/cart">
                       <ShoppingCart size={18} className="text-gray-700" />
                     </NavLink>
                   </div>
@@ -336,14 +374,11 @@ export default function NavBar() {
                 </div>
               </div>
             </div>
-
           </div>
-
         </div>
 
         {/* BOTTOM BAR (HIDE FEATURES ON MOBILE) */}
         <div className="h-1/3 w-full px-4 flex items-center justify-between rounded-md bg-[#1aba1a]">
-
           <div className="w-full md:w-1/4 h-10 bg-white rounded-xl px-2 my-4 flex items-center justify-between">
             <Select>
               <SelectTrigger className="w-32 h-8 border-none">
@@ -357,7 +392,9 @@ export default function NavBar() {
                   <SelectItem value="phones">Mobile Phones</SelectItem>
                   <SelectItem value="laptops">Laptops & Computers</SelectItem>
                   <SelectItem value="gaming">Gaming</SelectItem>
-                  <SelectItem value="accessories">Device Accessories</SelectItem>
+                  <SelectItem value="accessories">
+                    Device Accessories
+                  </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -375,10 +412,8 @@ export default function NavBar() {
             <li>30 DAYS MONEY BACK</li>
             <li>100% SECURE PAYMENT</li>
           </ul>
-
         </div>
-
       </div>
     </div>
-  )
+  );
 }
