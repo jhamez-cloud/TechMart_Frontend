@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 
 interface Props {
+    id:number,
     image:string,
     name:string,
     quantity?:number,
