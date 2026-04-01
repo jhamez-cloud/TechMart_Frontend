@@ -19,28 +19,46 @@ import useSWR from "swr"
 import { Product } from "@/types"
 import { CartProduct } from "@/types/cart"
 import CheckoutCard from "./ui/CheckoutCard"
-import { useEffect, useState } from "react"
+import { useEffect,useState,useContext } from "react"
+import { CartContext } from "@/context/context"
+import NoProduct from "./NoProduct"
 
 export default function CheckoutPage() {
 
-  const [orders, setOrders] = useState<CartProduct[]>([])
-  const [orderIds, setOrderIds] = useState<string>("")
+  const shipping_fee = 9.5
 
-  useEffect(() => {
-    const data: CartProduct[] = JSON.parse(localStorage.getItem("orders") || "[]")
-    
-    setOrders(data)
-    setOrderIds(data.map(order => order.id).join(','))
-  }, [])
+  const context = useContext(CartContext);
+  if (!context) throw new Error("Cart Context Not Available");
+
+  const { orders, removeFromCart } = context;
+
+  const orderProductIds = orders.map((o) => o.id).join(",");
+
+  const subtotal = orders.reduce((total, order) => {
+    return total + (order.variant.price! * order.quantity!)
+  }, 0)
+
+  const total = subtotal + shipping_fee
+  
+  /*if (!orders.length) {
+    return (
+      <div className="w-full mt-4">
+        <NoProduct />
+      </div>
+    );
+  }*/
 
   const Django_Url = process.env.NEXT_PUBLIC_DJANGO_URL;
 
-  const { data: products, error: error } = useSWR<Product[]>(
-    `${Django_Url}/api/v1/products/?id_in=${orderIds}`,
+  const { data: products, error } = useSWR<Product[]>(
+    orderProductIds
+      ? `${Django_Url}/api/v1/products/?id_in=${orderProductIds}`
+      : null
   );
+
   
-  if (error) return <ApiError />;
-  if (!products) return <ApiLoading />;
+  //if (error) return <ApiError />;
+  //if (!products) return <ApiLoading />;
 
   return (
     <div className="w-full min-h-120 rounded-md mt-4 bg-gray-100 p-4 md:p-10 flex justify-center">
@@ -82,27 +100,43 @@ export default function CheckoutPage() {
               </div>
 
               <div className="flex flex-col gap-4 justify-between text-sm">
-                {products.map((product) => {
-                  const orderlist = orders.find((o)=>o.id === product.id) 
+                {error && <ApiError/>}
+                {!orders.length && <NoProduct/>}
+                {orders.map((order) => {
+                  // find product that contains this variant
+                  const product = products?.find((p) =>
+                    p.variants?.some((v) => v.id === order.id)
+                  );
+                  if (!product) return null;
+
+                  // find the specific variant
+                  const selectedVariant = product.variants?.find((v) => v.id === order.id);
+                  if (!selectedVariant) return null;
+
                   return <CheckoutCard
-                    key={orderlist?.id}
+                    key={order.id}
+                    id={order.id!}
                     name={product.name}
-                    image={product.image}
-                    price={1234}
-                    quantity={orderlist?.quantity}
+                    image={selectedVariant.image!}
+                    price={Number(selectedVariant.price!)}
+                    quantity={order.quantity}
                   />
                 })}
               </div>
 
-              <div className="flex justify-between text-sm text-red-500">
-                <span>Worldwide Standard Shipping Free</span>
-                <span>+ $9.50</span>
-              </div>
+              {products &&  
+                <>
+                  <div className="flex justify-between text-sm text-red-500">
+                    <span>Worldwide Standard Shipping Free</span>
+                    <span>+ $9.50</span>
+                  </div>
 
-              <div className="flex justify-between font-semibold text-green-600">
-                <span>Order Total</span>
-                <span>$1,746.50</span>
-              </div>
+                  <div className="flex justify-between font-semibold text-green-600">
+                    <span>Order Total</span>
+                    <span>${total.toFixed(2)}</span>
+                  </div>
+                </>
+              } 
             </div>
 
             {/* PAYMENT */}
