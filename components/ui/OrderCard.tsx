@@ -90,24 +90,25 @@ export default function OrderCard(props: Props) {
 
         {/* QUANTITY */}
         <ButtonGroup>
-              <Button
-                variant="outline"
-              >
-                <Minus />
-              </Button>
-              <Input
-                value={props.order_quantity}
-                min={1}
-                max={props.stock_left!}
-                readOnly
-                className="w-10 bg-white text-center"
-              />
-              <Button
-                variant="outline"
-              >
-                <Plus />
-              </Button>
-            </ButtonGroup>
+          <Button
+            variant="outline"
+          >
+            <Minus />
+          </Button>
+          <Input
+            value={props.order_quantity}
+            min={1}
+            max={props.stock_left!}
+            readOnly
+            className="w-10 bg-white text-center"
+          />
+          <Button
+            variant="outline"
+          >
+            <Plus />
+          </Button>
+        </ButtonGroup>
+        <p className="text-sm font-light text-red-400">Can&apos;t edit item quantity once in cart.</p>
 
         {/* TAGS */}
         <div className="flex flex-wrap gap-2 text-xs">
