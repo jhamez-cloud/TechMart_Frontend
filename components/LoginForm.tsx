@@ -94,6 +94,7 @@ export default function LoginForm() {
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <InputGroupAddon
                 align="inline-end"

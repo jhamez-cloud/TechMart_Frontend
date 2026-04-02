@@ -109,6 +109,7 @@ export default function RegisterForm() {
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <InputGroupAddon
                 align="inline-end"
@@ -132,6 +133,7 @@ export default function RegisterForm() {
                 placeholder="Confirm your password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                required
               />
               <InputGroupAddon
                 align="inline-end"
