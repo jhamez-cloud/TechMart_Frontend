@@ -14,16 +14,11 @@ import RecentlyViewed from "@/components/RecentlyViewed";
 import About from "@/components/About";
 import Footer from "@/components/Footer";
 
-import useSWR from "swr";
-
 export default function Home() {
-
-  const Django_URL = process.env.NEXT_PUBLIC_DJANGO_URL
-  const {data:products,error:error} = useSWR(`${Django_URL}/api/v1/products/?category=laptops`)
 
   return (
     <div className={`w-full min-h-screen md:w-full`}>
-      <div className="w-full h-full p-12 bg-gray-200">
+      <div className="w-full h-full p-4 md:p-12 bg-gray-200">
         <NavBar />
         <Hero />
         <br />
