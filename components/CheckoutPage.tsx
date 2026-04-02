@@ -10,6 +10,8 @@ import {
   SelectValue
 } from "@/components/ui/select"
 
+import { Field,FieldDescription,FieldLabel } from "./ui/field"
+
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { InputGroup, InputGroupInput } from "@/components/ui/input-group"
@@ -33,12 +35,6 @@ export default function CheckoutPage() {
   const { orders, removeFromCart } = context;
 
   const orderProductIds = orders.map((o) => o.id).join(",");
-
-  const subtotal = orders.reduce((total, order) => {
-    return total + (order.variant.price! * order.quantity!)
-  }, 0)
-
-  const total = subtotal + shipping_fee
   
   /*if (!orders.length) {
     return (
@@ -55,6 +51,18 @@ export default function CheckoutPage() {
       ? `${Django_Url}/api/v1/products/?id_in=${orderProductIds}`
       : null
   );
+
+  const subtotal = orders.reduce((total, order) => {
+    return total + (order.variant.price! * order.quantity!)
+  }, 0)
+
+  const shippingFees = products?.map((p)=>p.shipping_fee)
+  //console.log(shippingFees)
+  const totalshippingFee = shippingFees?.reduce((total,fee)=>{
+    return total + fee
+  })
+
+  const total = subtotal + shipping_fee + totalshippingFee!
 
   
   //if (error) return <ApiError />;
@@ -86,7 +94,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* MAIN CONTENT: Your Order & Billing */}
-        <div className="flex flex-col md:flex-row-reverse gap-6">
+        <div className="flex flex-col-reverse md:flex-row gap-6">
 
           {/* YOUR ORDER */}
           <div className="flex-1 space-y-6 order-1 md:order-2">
@@ -142,7 +150,7 @@ export default function CheckoutPage() {
             {/* PAYMENT */}
             <div className="bg-gray-100 rounded-xl p-6 space-y-4">
               <div className="flex items-start gap-2">
-                <input type="radio" defaultChecked/>
+                <input type="radio" id="paymentMthd" defaultChecked/>
                 <div className="text-sm">
                   <p className="font-semibold">Direct Bank Transfer</p>
                   <p className="text-xs text-gray-500">
@@ -152,12 +160,12 @@ export default function CheckoutPage() {
               </div>
 
               <div className="flex items-center gap-2">
-                <input type="radio"/>
+                <input type="radio" id="paymentMthd"/>
                 <span className="text-sm">Cash on Delivery</span>
               </div>
 
               <div className="flex items-center gap-2">
-                <input type="radio"/>
+                <input type="radio" id="paymentMthd"/>
                 <span className="text-sm">Paypal</span>
               </div>
 
@@ -170,7 +178,7 @@ export default function CheckoutPage() {
           {/* BILLING DETAIL */}
           <div className="flex-1 space-y-6 order-2 md:order-1">
 
-            <h2 className="font-semibold">Billing Detail</h2>
+            <h2 className="font-semibold">Billing & Delivery Details</h2>
 
             {/* NAME */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -219,13 +227,29 @@ export default function CheckoutPage() {
             </Select>
 
             <Input placeholder="Zip Code *"/>
-            <Input placeholder="Phone Number *"/>
-            <Input placeholder="Email Address *"/>
+            <Field>
+              <FieldLabel htmlFor="fieldgroup-phone">Phone Number</FieldLabel>
+              <Input
+                id="phonenumber"
+                placeholder="Phone Number"
+                required
+              />
+              <FieldDescription>
+                We&apos;ll contact you through this number.
+              </FieldDescription>
+            </Field>
 
-            <div className="flex items-center gap-2 text-sm">
-              <input type="checkbox"/>
-              <span>Create an account?</span>
-            </div>
+            <Field>
+              <FieldLabel htmlFor="fieldgroup-email">Email Address</FieldLabel>
+              <Input
+                id="email"
+                placeholder="Email"
+                required
+              />
+              <FieldDescription>
+                We&apos;ll send updates to this address.
+              </FieldDescription>
+            </Field>
 
             {/* ADDITIONAL INFO */}
             <div className="space-y-2">
