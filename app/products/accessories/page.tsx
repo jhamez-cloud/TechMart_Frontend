@@ -2,6 +2,7 @@ import React from 'react'
 import NavBar from '@/components/NavBar'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Footer from '@/components/Footer'
+import ApiError from '@/components/ApiError'
 
 export default function page() {
   return (
@@ -12,7 +13,7 @@ export default function page() {
               parent1='Products'
               parent2='Accessories'
             />
-            <h1>Accessories Page</h1>
+            <ApiError/>
         </div>
         <Footer/>
     </div>
