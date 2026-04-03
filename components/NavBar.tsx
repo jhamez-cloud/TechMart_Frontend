@@ -30,13 +30,14 @@ import {
   InputGroupAddon,
 } from "@/components/ui/input-group";
 
-import { CartProduct } from "@/types/cart";
+import { useAuth } from "@/context/AuthContext";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [pagesOpen, setPagesOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const context = useContext(CartContext);
+  const { currentUser, loading } = useAuth();
 
   if (!context) throw new Error("Cart Context Not Found");
   const { orders } = context;
@@ -174,7 +175,10 @@ export default function NavBar() {
           <div>
             <p className="font-light text-sm">Welcome</p>
             <p className="text-sm">
-              <a href="">Login</a> | <a href="">Register</a>
+              {currentUser.email || 
+              <>
+                <a href="">Login</a> | <a href="">Register</a>
+              </>}
             </p>
           </div>
 
