@@ -24,6 +24,36 @@ import CheckoutCard from "./ui/CheckoutCard"
 import { useEffect,useState,useContext } from "react"
 import { CartContext } from "@/context/context"
 import NoProduct from "./NoProduct"
+import { useAuth } from "@/context/AuthContext"
+import { createOrder } from "@/lib/api"
+import useSWRMutation from "swr/mutation"
+import { compare } from "swr/_internal"
+import { CompassIcon } from "lucide-react"
+
+type OrderPayload = {
+  firebase_uid: string;
+  total_price: number;
+  items: {
+    product_id: number;
+    variant_id: number;
+    color: string;
+    ram: string;
+    storage: string;
+    quantity: number;
+    price: number;
+  }[];
+  shipping: {
+    first_name: string;
+    last_name: string;
+    company: string;
+    address: string;
+    apartment: string;
+    city: string;
+    phone: string;
+    email: string;
+    additional_info: string;
+  };
+};
 
 export default function CheckoutPage() {
 
@@ -33,6 +63,7 @@ export default function CheckoutPage() {
   if (!context) throw new Error("Cart Context Not Available");
 
   const { orders, removeFromCart } = context;
+  const {currentUser, loading} = useAuth()
 
   const orderProductIds = orders.map((o) => o.id).join(",");
   
@@ -63,6 +94,54 @@ export default function CheckoutPage() {
   })
 
   const total = subtotal + shipping_fee + totalshippingFee!
+
+  const cart = JSON.parse(localStorage.getItem("orders") || "[]") as CartProduct[]
+  const items = cart.map((item: any) => ({
+    product_id: item.productId,
+    variant_id: item.id,
+    color: item.variant.color,
+    ram: item.variant.ram,
+    storage: item.variant.storage,
+    price: item.variant.price,
+    quantity: item.quantity,
+  }));
+
+  const [formData,setFormData] = useState({
+    firstname:"",
+    lastname:"",
+    company:"",
+    address:"",
+    apartment:"",
+    city:"",
+    phone:"",
+    email:"",
+    additionalInfo:"",
+  })
+
+  const { trigger,isMutating } = useSWRMutation<any,any,string,OrderPayload>(`${Django_Url}/api/v1/orders/`,createOrder);
+
+  const handlePurchase = async () => {
+
+    const payload = {
+      firebase_uid: currentUser.uid,
+      total_price: total,
+      items,
+      shipping: {
+        first_name: formData.firstname,
+        last_name: formData.lastname,
+        address: formData.address,
+        apartment: formData.apartment || "",
+        company: formData.company || "",
+        city: formData.city,
+        phone: formData.phone,
+        email: formData.email,
+        additional_info: formData.additionalInfo,
+      },
+    };
+
+    await trigger(payload);
+    //localStorage.removeItem("cart");
+};
 
   
   //if (error) return <ApiError />;
@@ -169,8 +248,8 @@ export default function CheckoutPage() {
                 <span className="text-sm">Paypal</span>
               </div>
 
-              <Button className="w-full bg-green-500 hover:bg-green-600">
-                PLACE ORDER
+              <Button className="w-full bg-green-500 hover:bg-green-600" onClick={handlePurchase} disabled={isMutating}>
+                {isMutating ? "Processing..." : "PLACE ORDER"}
               </Button>
             </div>
           </div>
@@ -183,55 +262,50 @@ export default function CheckoutPage() {
             {/* NAME */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <InputGroup>
-                <InputGroupInput placeholder="First Name *"/>
+                <InputGroupInput 
+                  placeholder="First Name *" 
+                  value={formData.firstname} 
+                  onChange={(e)=>setFormData({...formData,firstname:e.target.value})}
+                />
               </InputGroup>
               <InputGroup>
-                <InputGroupInput placeholder="Last Name *"/>
+                <InputGroupInput 
+                  placeholder="Last Name *" 
+                  value={formData.lastname} 
+                  onChange={(e)=>setFormData({...formData,lastname:e.target.value})}
+                />
               </InputGroup>
             </div>
 
-            <Input placeholder="Company Name (Optional)"/>
+            <Input 
+              placeholder="Company Name (Optional)"
+              value={formData.company}
+              onChange={(e)=>setFormData({...formData,company:e.target.value})}
+             />
 
-            {/* COUNTRY */}
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Country / Region"/>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Countries</SelectLabel>
-                  <SelectItem value="us">United States</SelectItem>
-                  <SelectItem value="uk">United Kingdom</SelectItem>
-                  <SelectItem value="ca">Canada</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            <Input 
+              placeholder="House number and street name"
+              value={formData.address}
+              onChange={(e)=>setFormData({...formData,address:e.target.value})}
+            />
+            <Input 
+              placeholder="Apartment, suite, unit etc (Optional)"
+              value={formData.apartment}
+              onChange={(e)=>setFormData({...formData,apartment:e.target.value})}
+            />
+            <Input 
+              placeholder="Town / City *"
+              value={formData.city}
+              onChange={(e)=>setFormData({...formData,city:e.target.value})}
+            />
 
-            <Input placeholder="House number and street name"/>
-            <Input placeholder="Apartment, suite, unit etc (Optional)"/>
-            <Input placeholder="Town / City *"/>
-
-            {/* STATE */}
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="State / County"/>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>States</SelectLabel>
-                  <SelectItem value="washington">Washington</SelectItem>
-                  <SelectItem value="california">California</SelectItem>
-                  <SelectItem value="texas">Texas</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-
-            <Input placeholder="Zip Code *"/>
             <Field>
               <FieldLabel htmlFor="fieldgroup-phone">Phone Number</FieldLabel>
               <Input
                 id="phonenumber"
                 placeholder="Phone Number"
+                value={formData.phone}
+                onChange={(e)=>setFormData({...formData,phone:e.target.value})}
                 required
               />
               <FieldDescription>
@@ -244,6 +318,8 @@ export default function CheckoutPage() {
               <Input
                 id="email"
                 placeholder="Email"
+                value={formData.email}
+                onChange={(e)=>setFormData({...formData,email:e.target.value})}
                 required
               />
               <FieldDescription>
@@ -258,6 +334,8 @@ export default function CheckoutPage() {
                 className="w-full border rounded-md p-3"
                 rows={4}
                 placeholder="Note about your order, e.g. special note for delivery"
+                value={formData.additionalInfo}
+                onChange={(e)=>setFormData({...formData,additionalInfo:e.target.value})}
               />
             </div>
 
