@@ -17,6 +17,9 @@ import { Eye, EyeOff } from "lucide-react";
 
 import { auth } from "@/lib/firebase";
 import { createUserWithEmailAndPassword,GoogleAuthProvider,signInWithPopup } from "firebase/auth";
+import { useAuth } from "@/context/AuthContext";
+import useSWRMutation from "swr/mutation";
+import { createprofile } from "@/lib/api";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +29,31 @@ export default function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
 
+  const { currentUser, loading } = useAuth();
   const isMatch = password === confirmPassword;
+  const Django_Url = process.env.NEXT_PUBLIC_DJANGO_URL
+  const {trigger} = useSWRMutation<any,any,string,{firebase_uid: string;user_name?: string;email?: string;phone?: string;}>(`${Django_Url}/api/v1/profiles/`,createprofile)
+
+
+  const [formData, setFormData] = useState({
+    picture:"",
+    name: "",
+    email: "",
+    phone: "",
+  });
+
+  const testPost = async (e:any) => {
+    e.preventDefault();
+    
+    const payload = {
+      firebase_uid : currentUser.uid,
+      user_name : formData.name,
+      email: formData.email,
+      phone: formData.phone,
+    }
+
+    await trigger(payload) 
+  };
 
   const handleSignUp = async (e:any) => {
     e.preventDefault();
@@ -36,6 +63,16 @@ export default function RegisterForm() {
         return;
       }
       await createUserWithEmailAndPassword(auth, email, password);
+
+      /*const payload = {
+        firebase_uid : currentUser.uid,
+        user_name : formData.name,
+        email: formData.email,
+        phone: formData.phone,
+      }
+
+      await trigger(payload)*/
+
       // User signed up successfully, handle redirection or state update
       console.log('Signed up successfully!');
       setError(null);
@@ -82,7 +119,11 @@ export default function RegisterForm() {
         <FieldGroup className="space-y-4 md:space-y-6">
           <Field>
             <FieldLabel htmlFor="fieldgroup-name">Your Name</FieldLabel>
-            <Input id="fieldgroup-name" placeholder="John Doe" 
+            <Input 
+              id="fieldgroup-name" 
+              placeholder="John Doe"
+              value={formData.name}
+              onChange={(e)=>setFormData({...formData,name:e.target.value})} 
             />
           </Field>
 
@@ -91,7 +132,10 @@ export default function RegisterForm() {
             <Input
               id="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value)
+                setFormData({...formData,email: e.target.value})
+              }}
               required
             />
             <FieldDescription>
@@ -151,6 +195,7 @@ export default function RegisterForm() {
             <Button type="submit" className="w-full md:w-auto bg-[#1ABA1A] text-white" onClick={handleSignUp}>
               REGISTER
             </Button>
+            <Button onClick={testPost}>Test Post</Button>
           </Field>
 
           <FieldDescription className="text-center md:text-left text-sm md:text-base">
