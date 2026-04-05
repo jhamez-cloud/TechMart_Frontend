@@ -123,7 +123,7 @@ export default function CheckoutPage() {
   const handlePurchase = async () => {
 
     const payload = {
-      firebase_uid: currentUser.uid,
+      firebase_uid: currentUser.uid || "testing ID",
       total_price: total,
       items,
       shipping: {
